@@ -1,10 +1,17 @@
+import { Routes, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
+
 function App() {
   
 
   return (
-    <>
-      <h1>Tribbu</h1>
-    </>
+    <div className="App">
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={ <LoginPage />} />
+      </Routes>
+    </div>
   )
 }
 
