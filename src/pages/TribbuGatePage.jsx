@@ -14,7 +14,7 @@ useEffect(() => {
   } else if (!user.tribbu) {
     navigate("/create-tribbu"); 
   } else {
-    navigate(`/tribbu/${user.tribbu._id}`);
+    navigate(`/tribbus/${user.tribbu._id}`);
   }
 }, [user, isLoading]);
 }

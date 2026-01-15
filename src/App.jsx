@@ -24,7 +24,7 @@ function App() {
         <Route path="/create-tribbu" element={<CreateTribbu />} />
         <Route path="/tribbus" element={<TribbuListPage />} />
         <Route path="/tribbus/edit/:tribbuId" element={<EditTribbusPage />} />
-        <Route path="/tribbu" element={<TribbuDetailsPage />} />
+        <Route path="/tribbus/:tribbuId" element={<TribbuDetailsPage />} />
       </Routes>
     </div>
   ) 
