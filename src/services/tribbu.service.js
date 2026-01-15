@@ -36,6 +36,10 @@ class TribbusService {
   deleteTribbu = (id) => {
     return this.api.delete(`/api/tribbus/${id}`);
   };
+
+  addMemberToTribbu = (tribbuId, userId, role) => {
+    return this.api.post(`/api/tribbus/${tribbuId}/members`, { userId, role });
+  };
 }
 
 const tribbusService = new TribbusService();

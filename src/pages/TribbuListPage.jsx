@@ -1,16 +1,14 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState, useEffect, useContext } from "react";
 import tribbusService from "../services/tribbu.service"; 
 import AddTribbu from "../components/CreateTribbu"; 
 import TribbuCard from "../components/TribbuCard";
-
-const API_URL = "http://localhost:5005";
+import { AuthContext } from "../context/auth.context";
 
 function TribbuListPage() {
     const [tribbus, setTribbus] = useState([]);
+    const { user } = useContext(AuthContext);
 
     const getAllTribbus = () => {
-
         tribbusService
             .getAllTribbus()
             .then((response) => setTribbus(response.data))
@@ -21,16 +19,19 @@ function TribbuListPage() {
         getAllTribbus();
     }, []);
     
-        return (
+    return (
+        <div className="TribbuListPage">
+            <AddTribbu refreshTribbus={getAllTribbus} />
 
-            <div className="TribbuListPage">
-                <AddTribbu refreshTribbus={getAllTribbus} />
-
-                {tribbus.map((tribbu) => (
-                    <TribbuCard key={tribbu._id} {...tribbu} />
-                ))}
-            </div>
-        );
+            {tribbus.map((tribbu) => (
+                <TribbuCard 
+                    key={tribbu._id} 
+                    {...tribbu}
+                    userId={user?._id}
+                />
+            ))}
+        </div>
+    );
 }
 
 export default TribbuListPage;

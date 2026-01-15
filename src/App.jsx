@@ -7,6 +7,7 @@ import TribbuDetailsPage from "./pages/TribbuDetailsPage";
 import CreateTribbu from "./components/CreateTribbu";
 import NavBar from "./components/NavBar";
 import TribbuListPage from "./pages/TribbuListPage";
+import EditTribbusPage from "./pages/EditTribbuPage";
 
 function App() {
   
@@ -22,6 +23,7 @@ function App() {
         <Route path="/tribbu-gate" element={<TribbuGatePage /> } />
         <Route path="/create-tribbu" element={<CreateTribbu />} />
         <Route path="/tribbus" element={<TribbuListPage />} />
+        <Route path="/tribbus/edit/:tribbuId" element={<EditTribbusPage />} />
         <Route path="/tribbu" element={<TribbuDetailsPage />} />
       </Routes>
     </div>
