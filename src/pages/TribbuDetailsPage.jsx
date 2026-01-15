@@ -1,4 +1,4 @@
-function TribbuPage() {
+function TribbuDetailsPage() {
     return (
         <>
         <h1>This is the Tribbu page</h1>
@@ -7,4 +7,4 @@ function TribbuPage() {
 
 }
 
-export default TribbuPage
+export default TribbuDetailsPage

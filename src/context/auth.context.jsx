@@ -45,7 +45,6 @@ function AuthProviderWrapper(props) {
     authenticateUser();
   };
 
-  // Nueva función login para manejar el inicio de sesión
   const login = async (email, password) => {
     try {
       const response = await authService.login({ email, password });
@@ -55,7 +54,6 @@ function AuthProviderWrapper(props) {
       }
     } catch (error) {
       console.error("Error during login:", error);
-      // Aquí puedes manejar errores, como mostrar un mensaje al usuario
     }
   };
 
@@ -72,7 +70,7 @@ function AuthProviderWrapper(props) {
         storeToken,
         authenticateUser,
         logOutUser,
-        login,  // Agregada al contexto
+        login,
       }}
     >
       {props.children}

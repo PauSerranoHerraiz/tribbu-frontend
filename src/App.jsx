@@ -3,9 +3,10 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import TribbuGatePage from "./pages/TribbuGatePage";
-import TribbuPage from "./pages/TribbuPage";
+import TribbuDetailsPage from "./pages/TribbuDetailsPage";
 import CreateTribbu from "./components/CreateTribbu";
 import NavBar from "./components/NavBar";
+import TribbuListPage from "./pages/TribbuListPage";
 
 function App() {
   
@@ -20,7 +21,8 @@ function App() {
         <Route path="/signup" element={<SignupPage /> } />
         <Route path="/tribbu-gate" element={<TribbuGatePage /> } />
         <Route path="/create-tribbu" element={<CreateTribbu />} />
-        <Route path="/tribbu" element={<TribbuPage />} />
+        <Route path="/tribbus" element={<TribbuListPage />} />
+        <Route path="/tribbu" element={<TribbuDetailsPage />} />
       </Routes>
     </div>
   ) 

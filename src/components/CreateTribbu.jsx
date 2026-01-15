@@ -1,20 +1,17 @@
 import { useState } from "react";
 import tribbusService from "../services/tribbu.service";
 
-function AddTribbu(props) {
+function CreateTribbu(props) {
   const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const requestBody = { title, description };
+    const requestBody = { name };
 
     tribbusService.createTribbu(requestBody)
       .then((response) => {
         setName("");
-        setDescription("");
-        props.refreshTribbus();
+       props.refreshTribbus();
       })
       .catch((error) => console.log(error));
   };
@@ -35,18 +32,10 @@ function AddTribbu(props) {
           onChange={(e) => setName(e.target.value)}
         />
 
-        <label>Description:</label>
-        <textarea
-          type="text"
-          name="description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-
         <button type="submit">Submit</button>
       </form>
     </div>
   );
 }
 
-export default AddTribbu;
+export default CreateTribbu;
