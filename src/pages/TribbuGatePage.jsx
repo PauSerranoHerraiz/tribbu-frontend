@@ -1,16 +1,20 @@
+import { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/auth.context";
+
 function TribbuGatePage (){
 const { user, isLoading } = useContext(AuthContext);
 const navigate = useNavigate();
 
 useEffect(() => {
-  if (isLoading) return;  // esperar a que se cargue user
+  if (isLoading) return; 
 
   if (!user) {
-    navigate("/login"); // seguridad extra
+    navigate("/login"); 
   } else if (!user.tribbu) {
-    navigate("/create-tribbu"); // todavía no tiene tribbu
+    navigate("/create-tribbu"); 
   } else {
-    navigate(`/tribbu/${user.tribbu._id}`); // tiene tribbu
+    navigate(`/tribbu/${user.tribbu._id}`);
   }
 }, [user, isLoading]);
 }
