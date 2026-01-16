@@ -16,10 +16,13 @@ class ChildService {
       return config;
     });
   }
-
-  createChild = (childData) => {
-    return axios.post(`${API_URL}/api/children`, childData);
-  };
+  
+ createChild = (childData) => {
+    return this.api.post("/api/children", childData);
+};
+  //createChild = (requestBody) => {
+    //return this.api.post("/api/children", requestBody);
+  //};
 
   getChildren = () => {
     return this.api.get("/api/children");
