@@ -8,21 +8,16 @@ class ChildService {
 
     this.api.interceptors.request.use((config) => {
       const storedToken = localStorage.getItem("authToken");
-
       if (storedToken) {
-        config.headers = { Authorization: `Bearer ${storedToken}` };
+        config.headers.Authorization = `Bearer ${storedToken}`;
       }
-
       return config;
     });
   }
-  
- createChild = (childData) => {
+
+  createChild = (childData) => {
     return this.api.post("/api/children", childData);
-};
-  //createChild = (requestBody) => {
-    //return this.api.post("/api/children", requestBody);
-  //};
+  };
 
   getChildren = () => {
     return this.api.get("/api/children");
@@ -30,6 +25,10 @@ class ChildService {
 
   getChild = (id) => {
     return this.api.get(`/api/children/${id}`);
+  };
+
+  getChildrenByTribbu = (tribbuId) => {
+    return this.api.get(`/api/tribbu/${tribbuId}/children`);
   };
 
   updateChild = (id, requestBody) => {
@@ -42,5 +41,4 @@ class ChildService {
 }
 
 const childService = new ChildService();
-
 export default childService;

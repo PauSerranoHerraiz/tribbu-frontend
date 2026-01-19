@@ -5,12 +5,15 @@ const roles = {
   cachorro: "bg-amber-100 text-amber-700",
 };
 
-export default function RoleBadge({ role }) {
+const fallbackClass = "bg-gray-100 text-gray-700";
+
+function RoleBadge({ role }) {
+  const cls = roles[role] ?? fallbackClass;
   return (
-    <span
-      className={`px-3 py-1 text-sm rounded-full font-medium ${roles[role]}`}
-    >
+    <span className={`px-3 py-1 text-sm rounded-full font-medium ${cls}`}>
       {role}
     </span>
   );
 }
+
+export default RoleBadge

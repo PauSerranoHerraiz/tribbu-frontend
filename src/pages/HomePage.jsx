@@ -11,11 +11,23 @@ function HomePage() {
     if (!isLoading && !user) navigate("/login");
   }, [isLoading, user, navigate]);
 
-  if (isLoading || !user) return <p>Cargando...</p>;
+  if (isLoading || !user)
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <p className="text-slate-600 text-lg">Cargando...</p>
+      </div>
+    );
 
   const tribbu = user.tribbuId;
 
-  if (!tribbu) return <p>No tienes una tribbu asignada aún.</p>;
+  if (!tribbu)
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <p className="text-slate-600 text-lg">
+          No tienes una tribbu asignada aún.
+        </p>
+      </div>
+    );
 
   const { name, _id, members } = tribbu;
 
@@ -24,26 +36,27 @@ function HomePage() {
   );
   const role = userMember?.role || "SABIO";
 
-  console.log("members:", members);
-  console.log("userMember:", userMember);
-  console.log("role:", role);
-
   return (
-    <div>
-      <h1>{name}</h1>
-      <p>
-        Tu rol: <strong>{role}</strong>
-      </p>
+    <div className="min-h-screen bg-slate-50 p-6 flex flex-col items-center space-y-6">
 
-      <hr />
+      <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 w-full max-w-2xl text-center">
+        <h1 className="text-2xl font-semibold text-slate-800 mb-2">{name}</h1>
+        <p className="text-slate-600">
+          Tu rol: <strong className="text-indigo-600">{role}</strong>
+        </p>
+      </div>
 
-      <EventsSection tribbuId={_id} role={role} />
+      <div className="w-full max-w-2xl">
+        <EventsSection tribbuId={_id} role={role} />
+      </div>
 
       {role === "GUARDIÁN" && (
-        <section>
-          <h2>Administración</h2>
-          <button>Gestionar miembros</button>
-        </section>
+        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 w-full max-w-2xl">
+          <h2 className="text-lg font-semibold text-slate-800 mb-4">Administración</h2>
+          <button className="bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2 px-4 rounded-md transition">
+            Gestionar miembros
+          </button>
+        </div>
       )}
     </div>
   );
