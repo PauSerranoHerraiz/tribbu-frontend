@@ -11,39 +11,48 @@ function TribbuDetailsPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    useEffect(() => {
-        const fetchTribbu = async () => {
-            try {
-                const token = localStorage.getItem("authToken");
-                
-                if (!token) {
-                    navigate("/login");
-                    return;
-                }
-
-                const response = await axios.get(
-                    `${import.meta.env.VITE_API_URL}/api/tribbus/${tribbuId}`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    }
-                );
-
-                setTribbu(response.data);
-                setChildren(response.data.children || []);
-                setError(null);
-            } catch (err) {
-                console.error("Error fetching tribbu:", err);
-                setError("No se pudo cargar la tribu");
-                setTribbu(null);
-            } finally {
-                setLoading(false);
+    const fetchTribbu = async () => {
+        try {
+            setLoading(true);
+            const token = localStorage.getItem("authToken");
+            
+            if (!token) {
+                navigate("/login");
+                return;
             }
-        };
 
+            const response = await axios.get(
+                `${import.meta.env.VITE_API_URL}/api/tribbus/${tribbuId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            console.log("Tribbu data:", response.data); // Debug
+            console.log("Children:", response.data.children); // Debug
+            
+            setTribbu(response.data);
+            setChildren(response.data.children || []);
+            setError(null);
+        } catch (err) {
+            console.error("Error fetching tribbu:", err);
+            setError("No se pudo cargar la tribu");
+            setTribbu(null);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
         fetchTribbu();
-    }, [tribbuId, navigate]);
+    }, [tribbuId]);
+
+    const handleChildAdded = async (newChild) => {
+        console.log("Child added, refetching..."); 
+        await fetchTribbu(); 
+    };
 
     if (loading) return <p>Cargando tribu...</p>;
     
@@ -57,27 +66,21 @@ function TribbuDetailsPage() {
 
             <AddChild
                 tribbuId={tribbu._id}
-                onChildAdded={(newChild) =>
-                    setChildren((prev) => [...prev, newChild])
-                }
+                onChildAdded={handleChildAdded}
             />
 
             <div>
-                <h2 className="text-xl font-semibold mb-2">Niños</h2>
+                <h2>Niños ({children.length})</h2>
 
                 {children.length === 0 ? (
                     <p>No hay niños todavía</p>
                 ) : (
-                    <ul className="space-y-2">
+                    <ul>
                         {children.map((child) => (
-                            <li
-                                key={child._id}
-                                className="border rounded p-2 bg-slate-50"
-                            >
-                                <p className="font-medium">{child.name}</p>
-                                <p className="text-sm text-slate-600">
-                                    Nacimiento: {child.birthDate?.slice(0, 10)}
-                                </p>
+                            <li key={child._id}>
+                                <p><strong>{child.name}</strong></p>
+                                <p>Nacimiento: {child.birthDate ? new Date(child.birthDate).toLocaleDateString() : 'N/A'}</p>
+                                <p>Notas: {child.notes || 'Sin notas'}</p>
                             </li>
                         ))}
                     </ul>
@@ -87,4 +90,4 @@ function TribbuDetailsPage() {
     );
 }
 
-export default TribbuDetailsPage
+export default TribbuDetailsPage;

@@ -20,7 +20,7 @@ function TribbuListPage() {
     }, []);
     
     return (
-        <div className="TribbuListPage">
+        <div>
             <AddTribbu refreshTribbus={getAllTribbus} />
 
             {tribbus.map((tribbu) => (

@@ -37,7 +37,7 @@ function AddChild({ tribbuId, onChildAdded }) {
     };
 
     return (
-        <div className="add-child">
+        <div>
             <h3>Añadir niño</h3>
 
             <form onSubmit={handleSubmit}>

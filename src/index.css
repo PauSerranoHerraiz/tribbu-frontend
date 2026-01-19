@@ -1,4 +1,4 @@
-/*@import "tailwindcss"; */
+@import "tailwindcss";
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -7,7 +7,7 @@
   text-align: center;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
+  color: rgba(130, 72, 72, 0.87);
   background-color: #242424;
 
   font-synthesis: none;
@@ -16,82 +16,8 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+li {
+list-style-type: none;
+padding: 0;
+margin:0;
 }
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  text-align: center;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-  text-align: center;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-.add-child {
-    border: 1px solid #ddd;
-    padding: 16px;
-    border-radius: 6px;
-    background: #fff;
-    max-width: 400px;
-}
-
-.add-child h3 {
-    margin-bottom: 12px;
-}
-
-.add-child form > div {
-    margin-bottom: 12px;
-}
-
-.add-child label {
-    display: block;
-    font-size: 14px;
-    margin-bottom: 4px;
-}
-
-.add-child input,
-.add-child textarea {
-    width: 100%;
-    padding: 6px;
-    box-sizing: border-box;
-}
-
-.add-child button {
-    padding: 8px 12px;
-    cursor: pointer;
-}
-
-.error {
-    color: red;
-    font-size: 14px;
-}
-
-
