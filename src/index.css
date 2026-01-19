@@ -15,6 +15,12 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.logo {
+    max-width: 70px;
+    z-index: 2;
+}
+
+
 
 li {
 list-style-type: none;

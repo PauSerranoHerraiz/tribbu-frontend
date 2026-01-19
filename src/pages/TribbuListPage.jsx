@@ -22,12 +22,6 @@ function TribbuListPage() {
   return (
     <div className="container mx-auto p-6 space-y-6">
 
-      {/* Crear Tribbu */}
-      <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-6">
-        <AddTribbu refreshTribbus={getAllTribbus} />
-      </div>
-
-      {/* Lista de Tribbus */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {tribbus.length === 0 ? (
           <p className="text-slate-500 italic col-span-full text-center">
