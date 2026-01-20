@@ -10,28 +10,31 @@ function EventModal({ event, slotInfo, tribbuId, canEdit, onClose, onEventUpdate
   
   const [title, setTitle] = useState(event?.title || "");
   const [start, setStart] = useState(
-    event?.start 
+    event?.start
       ? moment(event.start).format("YYYY-MM-DDTHH:mm")
-      : slotInfo?.start 
+      : slotInfo?.start
         ? moment(slotInfo.start).format("YYYY-MM-DDTHH:mm")
         : ""
   );
   const [end, setEnd] = useState(
-    event?.end 
+    event?.end
       ? moment(event.end).format("YYYY-MM-DDTHH:mm")
-      : slotInfo?.end 
+      : slotInfo?.end
         ? moment(slotInfo.end).format("YYYY-MM-DDTHH:mm")
         : ""
   );
   const [childId, setChildId] = useState(event?.childId?._id || "");
   const [responsibles, setResponsibles] = useState(
-    event?.responsibles?.map(r => r._id || r) || []
+    event?.responsibles?.map((r) => r._id || r) || []
   );
   const [completed, setCompleted] = useState(event?.completed || false);
   const [children, setChildren] = useState([]);
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const [checklistItems, setChecklistItems] = useState(event?.checklistItems || []);
+  const [newChecklistItem, setNewChecklistItem] = useState("");
 
   useEffect(() => {
     if (!eventTribbuId) return;
@@ -48,10 +51,25 @@ function EventModal({ event, slotInfo, tribbuId, canEdit, onClose, onEventUpdate
   }, [eventTribbuId]);
 
   const handleResponsibleToggle = (userId) => {
-    setResponsibles(prev => 
+    setResponsibles((prev) =>
       prev.includes(userId)
-        ? prev.filter(id => id !== userId)
+        ? prev.filter((id) => id !== userId)
         : [...prev, userId]
+    );
+  };
+
+  const handleAddChecklistItem = () => {
+    const text = newChecklistItem.trim();
+    if (!text) return;
+    setChecklistItems((prev) => [...prev, { text, completed: false }]);
+    setNewChecklistItem("");
+  };
+
+  const toggleChecklistItem = (index) => {
+    setChecklistItems((prev) =>
+      prev.map((item, i) =>
+        i === index ? { ...item, completed: !item.completed } : item
+      )
     );
   };
 
@@ -68,6 +86,7 @@ function EventModal({ event, slotInfo, tribbuId, canEdit, onClose, onEventUpdate
       childId: childId || null,
       responsibles,
       completed,
+      checklistItems: checklistItems || [],
     };
 
     try {
@@ -89,7 +108,6 @@ function EventModal({ event, slotInfo, tribbuId, canEdit, onClose, onEventUpdate
 
   const handleDelete = async () => {
     if (!window.confirm("¿Estás seguro de eliminar este evento?")) return;
-    
     setLoading(true);
     setError(null);
 
@@ -125,7 +143,6 @@ function EventModal({ event, slotInfo, tribbuId, canEdit, onClose, onEventUpdate
         {error && <p className="text-sm text-red-600 bg-red-50 p-2 rounded">{error}</p>}
 
         {!canEditThisEvent && event ? (
-
           <div className="space-y-3">
             <div>
               <p className="text-sm font-medium text-slate-700">Título</p>
@@ -174,10 +191,26 @@ function EventModal({ event, slotInfo, tribbuId, canEdit, onClose, onEventUpdate
 
             <div>
               <p className="text-sm font-medium text-slate-700">Estado</p>
-              <p className={`font-medium ${event.completed ? 'text-green-600' : 'text-amber-600'}`}>
-                {event.completed ? '✓ Completado' : '⏳ Pendiente'}
+              <p className={`font-medium ${event.completed ? "text-green-600" : "text-amber-600"}`}>
+                {event.completed ? "✓ Completado" : "⏳ Pendiente"}
               </p>
             </div>
+
+            {event.checklistItems && event.checklistItems.length > 0 && (
+              <div>
+                <p className="text-sm font-medium text-slate-700">Checklist</p>
+                <ul className="mt-1 space-y-1">
+                  {event.checklistItems.map((item, idx) => (
+                    <li key={idx} className="flex items-center gap-2 text-sm">
+                      <input type="checkbox" checked={item.completed} readOnly className="rounded text-indigo-600" />
+                      <span className={item.completed ? "line-through text-slate-400" : "text-slate-800"}>
+                        {item.text}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             <button
               onClick={onClose}
@@ -187,7 +220,6 @@ function EventModal({ event, slotInfo, tribbuId, canEdit, onClose, onEventUpdate
             </button>
           </div>
         ) : (
-
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="flex flex-col">
               <label className="mb-1 text-sm font-medium text-slate-700">Título</label>
@@ -225,7 +257,10 @@ function EventModal({ event, slotInfo, tribbuId, canEdit, onClose, onEventUpdate
                   members.map((member) => {
                     const userId = member.userId._id || member.userId;
                     return (
-                      <label key={userId} className="flex items-center gap-2 cursor-pointer hover:bg-slate-50 p-1 rounded">
+                      <label
+                        key={userId}
+                        className="flex items-center gap-2 cursor-pointer hover:bg-slate-50 p-1 rounded"
+                      >
                         <input
                           type="checkbox"
                           checked={responsibles.includes(userId)}
@@ -277,6 +312,45 @@ function EventModal({ event, slotInfo, tribbuId, canEdit, onClose, onEventUpdate
                 </label>
               </div>
             )}
+
+            <div className="flex flex-col">
+              <label className="mb-1 text-sm font-medium text-slate-700">Checklist (opcional)</label>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={newChecklistItem}
+                  onChange={(e) => setNewChecklistItem(e.target.value)}
+                  placeholder="Añadir ítem"
+                  className="flex-1 border border-slate-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                />
+                <button
+                  type="button"
+                  onClick={handleAddChecklistItem}
+                  className="px-3 bg-indigo-500 hover:bg-indigo-600 text-white font-medium rounded-md"
+                >
+                  Añadir
+                </button>
+              </div>
+              <ul className="mt-2 space-y-1">
+                {checklistItems.map((item, index) => (
+                  <li
+                    key={index}
+                    className="flex items-center gap-2 text-sm cursor-pointer"
+                    onClick={() => toggleChecklistItem(index)}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={item.completed}
+                      readOnly
+                      className="rounded text-indigo-600"
+                    />
+                    <span className={item.completed ? "line-through text-slate-400" : "text-slate-700"}>
+                      {item.text}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
             <div className="flex gap-2 pt-2">
               <button
