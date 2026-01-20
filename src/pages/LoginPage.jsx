@@ -10,21 +10,19 @@ function LoginPage() {
   const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
 
-  const handleEmailLogin = (e) => {
+  const handleEmailLogin = async (e) => {
     e.preventDefault();
     setErrorMessage(null);
 
-    authService
-      .login({ email, password })
-      .then((response) => {
-        storeToken(response.data.authToken);
-        authenticateUser();
-        navigate("/");
-      })
-      .catch((error) => {
-        const message = error.response?.data?.message || "Error al iniciar sesión";
-        setErrorMessage(message);
-      });
+    try {
+      const response = await authService.login({ email, password });
+      storeToken(response.data.authToken);
+      await authenticateUser();
+      navigate("/");
+    } catch (error) {
+      const message = error.response?.data?.message || "Error al iniciar sesión";
+      setErrorMessage(message);
+    }
   };
 
   const handleGoogleLogin = async () => {
