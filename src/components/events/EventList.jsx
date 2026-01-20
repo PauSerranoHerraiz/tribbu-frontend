@@ -37,7 +37,6 @@ function EventList({ events, onEventUpdated, onEventDeleted, canEdit = false, tr
     setSelectedSlot(null);
   };
 
-  // Estilo personalizado para eventos completados
   const eventStyleGetter = (event) => {
     const style = {
       backgroundColor: event.resource.completed ? '#10b981' : '#6366f1',
@@ -68,11 +67,11 @@ function EventList({ events, onEventUpdated, onEventDeleted, canEdit = false, tr
   const calendarEvents = events.map((event) => {
     let title = event.completed ? '✓ ' : '';
     title += event.title;
-    
+
     if (event.childId?.name) {
       title += ` - 🐶 ${event.childId.name}`;
     }
-    
+
     if (event.tribbuName) {
       title += ` (${event.tribbuName})`;
     }
@@ -104,7 +103,7 @@ function EventList({ events, onEventUpdated, onEventDeleted, canEdit = false, tr
             <span className="text-slate-600">Completado</span>
           </div>
         </div>
-        
+
         <Calendar
           localizer={localizer}
           events={calendarEvents}

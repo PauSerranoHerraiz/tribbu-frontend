@@ -42,7 +42,6 @@ function AddChild({ tribbuId, onChildAdded }) {
 
       <form onSubmit={handleSubmit} className="space-y-4">
 
-        {/* Nombre */}
         <div>
           <label className="block text-sm font-medium text-slate-600 mb-1">
             Nombre
@@ -58,7 +57,6 @@ function AddChild({ tribbuId, onChildAdded }) {
           />
         </div>
 
-        {/* Fecha */}
         <div>
           <label className="block text-sm font-medium text-slate-600 mb-1">
             Fecha de nacimiento
@@ -73,7 +71,6 @@ function AddChild({ tribbuId, onChildAdded }) {
           />
         </div>
 
-        {/* Notas */}
         <div>
           <label className="block text-sm font-medium text-slate-600 mb-1">
             Notas
@@ -88,22 +85,19 @@ function AddChild({ tribbuId, onChildAdded }) {
           />
         </div>
 
-        {/* Error */}
         {error && (
           <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded p-2">
             {error}
           </p>
         )}
 
-        {/* Submit */}
         <button
           type="submit"
           disabled={loading}
           className={`w-full py-2 rounded-md font-medium transition
-            ${
-              loading
-                ? "bg-slate-300 text-slate-500 cursor-not-allowed"
-                : "bg-indigo-500 text-white hover:bg-indigo-600"
+            ${loading
+              ? "bg-slate-300 text-slate-500 cursor-not-allowed"
+              : "bg-indigo-500 text-white hover:bg-indigo-600"
             }`}
         >
           {loading ? "Creando..." : "Crear cachorro"}

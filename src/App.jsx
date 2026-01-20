@@ -16,6 +16,7 @@ import RoleBadge from "./components/ui/RoleBadge";
 import { AuthContext } from "./context/auth.context";
 import EventsPage from "./components/events/EventsPage";
 import DemoPage from "./pages/DemoPage";
+import InvitationPage from "./pages/InvitationPage";
 
 
 function App() {
@@ -41,6 +42,7 @@ function App() {
           <Route path="/tribbus/edit/:tribbuId" element={<EditTribbusPage />} />
           <Route path="/tribbus/:tribbuId" element={<TribbuDetailsPage />} />
           <Route path="/events" element={<EventsPage />} />
+          <Route path="/invitations/:invitationId" element={<InvitationPage />} />
         </Routes>
 
       </div>

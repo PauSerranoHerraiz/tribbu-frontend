@@ -41,12 +41,16 @@ class TribbusService {
     return this.api.post(`/api/tribbus/${tribbuId}/members`, { userId, role });
   };
 
-    getUserTribbus = () => {
+  getUserTribbus = () => {
     return this.api.get("/api/tribbus/user/my-tribbus");
   };
 
   addMemberToTribbu = (tribbuId, userId, role) => {
     return this.api.post(`/api/tribbus/${tribbuId}/members`, { userId, role });
+  };
+
+  inviteMemberToTribbu = (tribbuId, data) => {
+    return this.api.post(`/api/tribbus/${tribbuId}/invite`, data);
   };
 }
 

@@ -86,7 +86,6 @@ function TribbuDetailsPage() {
 
   return (
     <div className="container mx-auto p-4 space-y-8">
-      {/* Cabecera */}
       <div className="bg-white border border-slate-200 rounded-2xl shadow-md p-6 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold text-slate-800">{tribbu.name}</h1>
@@ -113,15 +112,23 @@ function TribbuDetailsPage() {
         </div>
       </div>
 
-      {/* Accesos rápidos */}
       <div className="flex flex-wrap gap-2 justify-center md:justify-start">
-        <a href="#events" className="px-3 py-2 rounded-xl bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition">
+        <a
+          href="#events"
+          className="px-3 py-2 rounded-xl bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition"
+        >
           Crear/Ver eventos
         </a>
-        <a href="#members" className="px-3 py-2 rounded-xl bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition">
+        <a
+          href="#members"
+          className="px-3 py-2 rounded-xl bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition"
+        >
           Ver miembros
         </a>
-        <a href="#children" className="px-3 py-2 rounded-xl bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition">
+        <a
+          href="#children"
+          className="px-3 py-2 rounded-xl bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition"
+        >
           Ver cachorros
         </a>
         {isGuardian && (
@@ -142,13 +149,17 @@ function TribbuDetailsPage() {
         )}
       </div>
 
-      {/* Eventos */}
-      <div id="events" className="bg-white border border-slate-200 rounded-2xl shadow-md p-6">
+      <div
+        id="events"
+        className="bg-white border border-slate-200 rounded-2xl shadow-md p-6"
+      >
         <EventsSection tribbuId={tribbu._id} role={role} />
       </div>
 
-      {/* Miembros */}
-      <div id="members" className="bg-white border border-slate-200 rounded-2xl shadow-md p-6">
+      <div
+        id="members"
+        className="bg-white border border-slate-200 rounded-2xl shadow-md p-6"
+      >
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-semibold text-slate-800">Miembros</h2>
           {isGuardian && (
@@ -172,7 +183,10 @@ function TribbuDetailsPage() {
         ) : (
           <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {members.map((member) => (
-              <li key={member.userId._id} className="flex flex-col items-start p-4 border border-slate-200 rounded-xl bg-slate-50 shadow-sm">
+              <li
+                key={member.userId._id}
+                className="flex flex-col items-start p-4 border border-slate-200 rounded-xl bg-slate-50 shadow-sm"
+              >
                 <p className="font-medium text-slate-700">{member.userId.name}</p>
                 <p className="text-xs text-slate-500">{member.userId.email}</p>
                 <span className="mt-2 text-xs font-semibold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-full">
@@ -184,8 +198,10 @@ function TribbuDetailsPage() {
         )}
       </div>
 
-      {/* Cachorros */}
-      <div id="children" className="bg-white border border-slate-200 rounded-2xl shadow-md p-6">
+      <div
+        id="children"
+        className="bg-white border border-slate-200 rounded-2xl shadow-md p-6"
+      >
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-semibold text-slate-800">
             Cachorros ({children.length})
@@ -211,12 +227,20 @@ function TribbuDetailsPage() {
         ) : (
           <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {children.map((child) => (
-              <li key={child._id} className="p-4 border border-slate-200 rounded-xl bg-slate-50 shadow-sm">
+              <li
+                key={child._id}
+                className="p-4 border border-slate-200 rounded-xl bg-slate-50 shadow-sm"
+              >
                 <p className="font-medium text-slate-700">{child.name}</p>
                 <p className="text-sm text-slate-600">
-                  Nacimiento: {child.birthDate ? new Date(child.birthDate).toLocaleDateString() : "N/A"}
+                  Nacimiento:{" "}
+                  {child.birthDate
+                    ? new Date(child.birthDate).toLocaleDateString()
+                    : "N/A"}
                 </p>
-                <p className="text-sm text-slate-600">Notas: {child.notes || "Sin notas"}</p>
+                <p className="text-sm text-slate-600">
+                  Notas: {child.notes || "Sin notas"}
+                </p>
               </li>
             ))}
           </ul>

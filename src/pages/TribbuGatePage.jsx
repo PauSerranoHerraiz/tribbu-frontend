@@ -7,7 +7,7 @@ function TribbuGatePage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isLoading) return; 
+    if (isLoading) return;
 
     if (!user) {
       navigate("/login");

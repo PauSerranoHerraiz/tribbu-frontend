@@ -21,7 +21,7 @@ function EventsSection({ tribbuId, role }) {
   };
 
   const handleEventUpdated = (updatedEvent) => {
-    fetchEvents(); // Recarga todos los eventos
+    fetchEvents();
   };
 
   const handleEventDeleted = (eventId) => {

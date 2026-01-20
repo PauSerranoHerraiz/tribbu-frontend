@@ -1,40 +1,37 @@
 import { useState } from "react";
 import tribbusService from "../services/tribbu.service";
-import userService from "../services/user.service";
 
 function AddMember({ tribbuId, onMemberAdded }) {
-  const [search, setSearch] = useState("");
-  const [users, setUsers] = useState([]);
-  const [selectedUserId, setSelectedUserId] = useState("");
+  const [email, setEmail] = useState("");
   const [role, setRole] = useState("SABIO");
-
-  const handleSearch = (e) => {
-    const value = e.target.value;
-    setSearch(value);
-
-    if (value.length > 2) {
-      userService
-        .searchUsers(value)
-        .then((response) => setUsers(response.data))
-        .catch((error) => console.log(error));
-    } else {
-      setUsers([]);
-    }
-  };
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError(null);
+    setSuccess(null);
 
     tribbusService
-      .addMemberToTribbu(tribbuId, selectedUserId, role)
+      .inviteMemberToTribbu(tribbuId, { email, role })
       .then(() => {
-        setSearch("");
-        setUsers([]);
-        setSelectedUserId("");
+        setSuccess(`Invitación enviada a ${email}`);
+        setEmail("");
         setRole("SABIO");
-        onMemberAdded();
+        setTimeout(() => {
+          setSuccess(null);
+          onMemberAdded?.();
+        }, 2000);
       })
-      .catch((error) => console.log(error));
+      .catch((err) => {
+        const message = 
+          err.response?.data?.message || 
+          "No se pudo enviar la invitación";
+        setError(message);
+      })
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -42,46 +39,39 @@ function AddMember({ tribbuId, onMemberAdded }) {
       onSubmit={handleSubmit}
       className="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-4"
     >
-
       <h4 className="text-sm font-semibold text-slate-700">
-        Añadir miembro
+        Invitar miembro por email
       </h4>
+
+      {error && (
+        <div className="p-3 bg-red-50 border border-red-200 rounded-md">
+          <p className="text-sm text-red-600">{error}</p>
+        </div>
+      )}
+
+      {success && (
+        <div className="p-3 bg-green-50 border border-green-200 rounded-md">
+          <p className="text-sm text-green-600">✓ {success}</p>
+        </div>
+      )}
 
       <div>
         <label className="block text-sm font-medium text-slate-600 mb-1">
-          Buscar usuario
+          Email del usuario
         </label>
         <input
-          type="text"
-          value={search}
-          onChange={handleSearch}
-          placeholder="Nombre o email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="usuario@example.com"
           className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm
                      focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          required
         />
+        <p className="text-xs text-slate-500 mt-1">
+          Se enviará una invitación a cualquier email. Si la persona no está registrada, recibirá un link para registrarse.
+        </p>
       </div>
-
-      {users.length > 0 && (
-        <div>
-          <label className="block text-sm font-medium text-slate-600 mb-1">
-            Usuario encontrado
-          </label>
-          <select
-            value={selectedUserId}
-            onChange={(e) => setSelectedUserId(e.target.value)}
-            required
-            className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm
-                       focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          >
-            <option value="">Selecciona un usuario</option>
-            {users.map((user) => (
-              <option key={user._id} value={user._id}>
-                {user.name} ({user.email})
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
 
       <div>
         <label className="block text-sm font-medium text-slate-600 mb-1">
@@ -102,15 +92,15 @@ function AddMember({ tribbuId, onMemberAdded }) {
 
       <button
         type="submit"
-        disabled={!selectedUserId}
+        disabled={!email || loading}
         className={`w-full py-2 rounded-md font-medium transition
           ${
-            selectedUserId
+            email && !loading
               ? "bg-indigo-500 text-white hover:bg-indigo-600"
               : "bg-slate-300 text-slate-500 cursor-not-allowed"
           }`}
       >
-        Añadir miembro
+        {loading ? "Enviando invitación..." : "Enviar invitación"}
       </button>
     </form>
   );

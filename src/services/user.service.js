@@ -13,10 +13,6 @@ class UserService {
       return config;
     });
   }
-
-  searchUsers = (query) => {
-    return this.api.get(`/api/users/search?query=${query}`);
-  };
 }
 
 const userService = new UserService();
