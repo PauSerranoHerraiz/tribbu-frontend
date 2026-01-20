@@ -20,7 +20,7 @@ function Navbar() {
 
                     <div className="flex items-center gap-6">
                         <Link to="/" className="text-lg font-bold text-white">
-                            <img className="logo" src="public/images/tribbu-logo.png" alt="Tribbu Logo" />
+                            <img className="logo" src="/images/tribbu-logo.png" alt="Tribbu Logo" />
                         </Link>
                     </div>
 

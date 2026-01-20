@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 import tribbuService from "../services/tribbu.service";
 
@@ -7,10 +7,12 @@ function HomePage() {
   const { user, isLoading } = useContext(AuthContext);
   const navigate = useNavigate();
   const [tribbus, setTribbus] = useState([]);
-  const [loadingTribbus, setLoadingTribbus] = useState(true);
+  const [loadingTribbus, setLoadingTribbus] = useState(false);
 
   useEffect(() => {
-    if (!isLoading && !user) navigate("/login");
+    if (!isLoading && !user) {
+      navigate("/demo");
+    }
   }, [isLoading, user, navigate]);
 
   useEffect(() => {
@@ -23,10 +25,19 @@ function HomePage() {
       .finally(() => setLoadingTribbus(false));
   }, [user]);
 
-  if (isLoading || !user || loadingTribbus)
+  if (isLoading)
     return (
       <div className="flex justify-center items-center min-h-screen">
         <p className="text-slate-600 text-lg">Cargando...</p>
+      </div>
+    );
+
+  if (!user) return null;
+
+  if (loadingTribbus)
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <p className="text-slate-600 text-lg">Cargando tribbus...</p>
       </div>
     );
 

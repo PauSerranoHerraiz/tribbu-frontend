@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import authService from "../services/auth.service";
+import { auth, provider } from "../services/firebase"; // Importa Firebase
+import { signInWithPopup } from "firebase/auth";
 
 const AuthContext = React.createContext();
 
@@ -16,44 +17,35 @@ function AuthProviderWrapper(props) {
     const storedToken = localStorage.getItem("authToken");
 
     if (storedToken) {
-      authService
-        .verify()
-        .then((response) => {
-          const user = response.data;
-          setIsLoggedIn(true);
-          setIsLoading(false);
-          setUser(user);
-        })
-        .catch((error) => {
-          setIsLoggedIn(false);
-          setIsLoading(false);
-          setUser(null);
-        });
+      // Aquí puedes verificar el token si es necesario
+      setIsLoggedIn(true);
+      setIsLoading(false);
+      // Aquí puedes obtener el usuario desde Firebase si es necesario
     } else {
       setIsLoggedIn(false);
       setIsLoading(false);
       setUser(null);
+      return Promise.resolve(null);
     }
   };
 
-  const removeToken = () => {
-    localStorage.removeItem("authToken");
-  };
-
   const logOutUser = () => {
-    removeToken();
-    authenticateUser();
+    auth.signOut().then(() => {
+      setIsLoggedIn(false);
+      setUser(null);
+      localStorage.removeItem("authToken");
+    });
   };
 
-  const login = async (email, password) => {
+  const loginWithGoogle = async () => {
     try {
-      const response = await authService.login({ email, password });
-      if (response.data.authToken) {
-        storeToken(response.data.authToken);
-        authenticateUser();
-      }
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      setUser(user);
+      setIsLoggedIn(true);
+      // Aquí puedes almacenar el token si es necesario
     } catch (error) {
-      console.error("Error during login:", error);
+      console.error("Error during Google login:", error);
     }
   };
 
@@ -70,7 +62,7 @@ function AuthProviderWrapper(props) {
         storeToken,
         authenticateUser,
         logOutUser,
-        login,
+        loginWithGoogle, // Agrega la función de login con Google
       }}
     >
       {props.children}

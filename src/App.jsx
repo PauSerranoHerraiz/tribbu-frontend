@@ -15,6 +15,8 @@ import Button from "./components/ui/Button";
 import RoleBadge from "./components/ui/RoleBadge";
 import { AuthContext } from "./context/auth.context";
 import EventsPage from "./components/events/EventsPage";
+import DemoPage from "./pages/DemoPage";
+
 
 function App() {
   const { user, isLoading, isLoggedIn } = useContext(AuthContext);
@@ -24,25 +26,26 @@ function App() {
   const role = user?.role || "cachorro";
 
   return (
-     <Layout> 
+    <Layout>
       <div className="min-h-screen bg-slate-50 p-8 space-y-6">
 
-        
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignupPage />} />
-            <Route path="/tribbu-gate" element={<TribbuGatePage />} />
-            <Route path="/create-tribbu" element={<CreateTribbu />} />
-            <Route path="/tribbus" element={<TribbuListPage />} />
-            <Route path="/tribbus/edit/:tribbuId" element={<EditTribbusPage />} />
-            <Route path="/tribbus/:tribbuId" element={<TribbuDetailsPage />} />
-            <Route path="/events" element={<EventsPage />} />
-          </Routes>
-        
+
+        <Routes>
+          <Route path="/demo" element={<DemoPage />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/tribbu-gate" element={<TribbuGatePage />} />
+          <Route path="/create-tribbu" element={<CreateTribbu />} />
+          <Route path="/tribbus" element={<TribbuListPage />} />
+          <Route path="/tribbus/edit/:tribbuId" element={<EditTribbusPage />} />
+          <Route path="/tribbus/:tribbuId" element={<TribbuDetailsPage />} />
+          <Route path="/events" element={<EventsPage />} />
+        </Routes>
+
       </div>
-      </Layout>
-      );
+    </Layout>
+  );
 }
 
-      export default App;
+export default App;
