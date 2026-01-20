@@ -5,6 +5,7 @@ import authService from "../services/auth.service";
 function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [name, setName] = useState("");
   const [errorMessage, setErrorMessage] = useState(undefined);
 
@@ -12,6 +13,17 @@ function SignupPage() {
 
   const handleSignupSubmit = (e) => {
     e.preventDefault();
+    setErrorMessage(undefined);
+
+    if (password !== confirmPassword) {
+      setErrorMessage("Las contraseñas no coinciden");
+      return;
+    }
+
+    if (password.length < 6) {
+      setErrorMessage("La contraseña debe tener al menos 6 caracteres");
+      return;
+    }
 
     authService
       .signup({ email, password, name })
@@ -19,7 +31,7 @@ function SignupPage() {
         navigate("/login");
       })
       .catch((error) => {
-        setErrorMessage(error.response?.data?.message || "Signup error");
+        setErrorMessage(error.response?.data?.message || "Error al crear la cuenta");
       });
   };
 
@@ -66,7 +78,7 @@ function SignupPage() {
 
           <div>
             <label className="block text-sm font-medium text-slate-600 mb-1">
-              Password
+              Contraseña
             </label>
             <input
               type="password"
@@ -74,7 +86,34 @@ function SignupPage() {
               onChange={(e) => setPassword(e.target.value)}
               className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
               required
+              minLength={6}
             />
+            <p className="text-xs text-slate-500 mt-1">
+              Mínimo 6 caracteres
+            </p>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-slate-600 mb-1">
+              Confirmar Contraseña
+            </label>
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              required
+            />
+            {confirmPassword && password !== confirmPassword && (
+              <p className="text-xs text-red-600 mt-1">
+                Las contraseñas no coinciden
+              </p>
+            )}
+            {confirmPassword && password === confirmPassword && (
+              <p className="text-xs text-green-600 mt-1">
+                ✓ Las contraseñas coinciden
+              </p>
+            )}
           </div>
 
           {errorMessage && (
@@ -85,9 +124,10 @@ function SignupPage() {
 
           <button
             type="submit"
-            className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2 rounded-md transition"
+            className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2 rounded-md transition disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={password !== confirmPassword || password.length < 6}
           >
-            Sign Up
+            Crear Cuenta
           </button>
         </form>
 
@@ -97,7 +137,7 @@ function SignupPage() {
             to="/login"
             className="text-indigo-500 hover:underline font-medium"
           >
-            Login
+            Iniciar Sesión
           </Link>
         </p>
 
