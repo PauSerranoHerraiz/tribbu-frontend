@@ -4,7 +4,7 @@ function Layout({ children }) {
   return (
     <div className="min-h-screen flex flex-col bg-slate-50">
 
-      <header className="sticky top-0 z-50 bg-indigo-500 text-white p-4 shadow-md">
+      <header>
         <Navbar />
       </header> 
 

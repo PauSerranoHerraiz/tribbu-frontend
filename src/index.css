@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "daisyui";
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -26,4 +27,30 @@ li {
 list-style-type: none;
 padding: 0;
 margin:0;
+}
+
+.logo:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 3px #8886f5;
+  border-radius: 12px;
+}
+
+.menu li a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    transition: background 0.3s;
+}
+
+.menu li a:hover {
+    background-color: #734E57;
+    border-radius: 12px;
+}
+
+.menu li a.active {
+    background-color: #904E55;
+    color: white;
+    border-radius: 12px;
 }
