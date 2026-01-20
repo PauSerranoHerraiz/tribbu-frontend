@@ -11,7 +11,10 @@ function TribbuListPage() {
   const getAllTribbus = () => {
     tribbusService
       .getAllTribbus()
-      .then((response) => setTribbus(response.data))
+      .then((response) => {
+        const userTribbus = response.data.filter(tribbu => tribbu.userId === user?._id);
+        setTribbus(userTribbus);
+      })
       .catch((error) => console.log(error));
   };
 

@@ -14,7 +14,7 @@ function CreateEvent({ onEventCreated, tribbuId }) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!tribbuId) return; // evita llamada con undefined
+    if (!tribbuId) return; 
     setLoadingChildren(true);
     childService
       .getChildrenByTribbu(tribbuId)

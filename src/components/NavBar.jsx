@@ -20,17 +20,18 @@ function Navbar() {
   if (isLoading) return null;
 
   return (
-    <nav className="bg-indigo-500 text-white shadow-md sticky top-0 z-50">
+    <nav className="bg-gradient-to-r from-indigo-500 to-violet-500 text-white shadow-md sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4">
-        <div className="grid grid-cols-3 items-center h-16 md:h-18">
+        <div className="grid grid-cols-3 items-center h-16 md:h-20">
 
-          <div className="flex items-center gap-6">
-            <Link to="/" className="flex items-center gap-2">
+          <div className="flex items-center gap-4">
+            <Link to="/" className="flex items-center gap-3">
               <img
                 className="h-9 md:h-15 transition-transform hover:scale-105"
                 src="/images/tribbu-logo.png"
                 alt="Tribbu Logo"
               />
+           
             </Link>
           </div>
 
@@ -38,14 +39,14 @@ function Navbar() {
             {isLoggedIn && (
               <div className="flex items-center gap-8 text-base">
                 {[
-                  { to: "/tribbus", label: "Mis Tribbus" },
-                  { to: "/create-tribbu", label: "Crear Tribbu" },
+                  { to: "/tribbus", label: "Mi Tribbu" },
+                  { to: "/create-tribbu", label: "Nueva Tribbu" },
                   { to: "/events", label: "Eventos" },
                 ].map(({ to, label }) => (
                   <Link
                     key={to}
                     to={to}
-                    className={`relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:bg-indigo-200 after:transition-all ${isActive(to)}`}
+                    className={`relative after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:bg-violet-300 after:transition-all ${isActive(to)}`}
                   >
                     {label}
                   </Link>
@@ -58,20 +59,21 @@ function Navbar() {
             {!isLoggedIn ? (
               <>
                 <Link to="/login" className="hover:text-indigo-100">
-                  Login
+                  Entrar
                 </Link>
                 <Link
                   to="/signup"
-                  className="bg-white/90 text-indigo-600 px-4 py-1.5 rounded-full font-medium
+                  className="bg-white/90 text-indigo-600 px-5 py-2 rounded-full font-medium
                              hover:bg-white hover:scale-105 transition transform"
                 >
-                  Sign up
+                  Crear cuenta
                 </Link>
               </>
             ) : (
               <>
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-indigo-300 flex items-center justify-center text-indigo-800 font-bold">
+                  <div className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-300 to-violet-300
+                                  flex items-center justify-center text-indigo-900 font-semibold shadow-sm">
                     {user?.name?.[0]}
                   </div>
                   <span className="hidden sm:block">{user?.name}</span>
@@ -79,10 +81,10 @@ function Navbar() {
 
                 <button
                   onClick={handleLogout}
-                  className="px-3 py-1.5 rounded-full border border-white/70
+                  className="px-4 py-2 rounded-full border border-white/70
                              hover:bg-white/10 transition"
                 >
-                  Logout
+                  Salir
                 </button>
               </>
             )}
@@ -90,6 +92,8 @@ function Navbar() {
 
         </div>
       </div>
+
+
     </nav>
   );
 }

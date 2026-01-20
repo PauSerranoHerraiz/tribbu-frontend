@@ -5,14 +5,18 @@ import axios from "axios";
 function InvitationPage() {
   const { invitationId } = useParams();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
+
+  const [loadingInvitation, setLoadingInvitation] = useState(true);
+  const [actionLoading, setActionLoading] = useState(false);
   const [error, setError] = useState(null);
   const [invitation, setInvitation] = useState(null);
+
+  // Leer token una sola vez
+  const token = localStorage.getItem("authToken");
 
   useEffect(() => {
     const fetchInvitation = async () => {
       try {
-        const token = localStorage.getItem("authToken");
         const res = await axios.get(
           `${import.meta.env.VITE_API_URL}/api/invitations/${invitationId}`,
           token ? { headers: { Authorization: `Bearer ${token}` } } : {}
@@ -23,53 +27,36 @@ function InvitationPage() {
           err.response?.data?.message || "Invitación no encontrada o expirada"
         );
       } finally {
-        setLoading(false);
+        setLoadingInvitation(false);
       }
     };
 
     fetchInvitation();
-  }, [invitationId]);
+  }, [invitationId, token]);
 
-  const handleAccept = async () => {
-    setLoading(true);
+  const handleAction = async (type) => {
+    if (!token) {
+      navigate(`/login?redirect=/invitations/${invitationId}`);
+      return;
+    }
+
+    setActionLoading(true);
+    setError(null);
+
     try {
-      const token = localStorage.getItem("authToken");
-      if (!token) {
-        navigate(`/login?redirect=/invitations/${invitationId}`);
-        return;
-      }
-
       await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/invitations/${invitationId}/accept`,
+        `${import.meta.env.VITE_API_URL}/api/invitations/${invitationId}/${type}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
-
       navigate("/");
     } catch (err) {
-      setError(err.response?.data?.message || "Error al aceptar invitación");
-      setLoading(false);
+      setError(err.response?.data?.message || `Error al ${type} la invitación`);
+      setActionLoading(false);
     }
   };
 
-  const handleDecline = async () => {
-    setLoading(true);
-    try {
-      const token = localStorage.getItem("authToken");
-      await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/invitations/${invitationId}/decline`,
-        {},
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-
-      navigate("/");
-    } catch (err) {
-      setError(err.response?.data?.message || "Error al rechazar invitación");
-      setLoading(false);
-    }
-  };
-
-  if (loading)
+  if (loadingInvitation)
     return (
       <div className="flex justify-center items-center min-h-screen">
         <p className="text-slate-600 text-lg">Cargando invitación...</p>
@@ -95,12 +82,8 @@ function InvitationPage() {
     <div className="flex justify-center items-center min-h-screen bg-slate-50">
       <div className="bg-white border border-slate-200 rounded-xl shadow-md p-8 max-w-md space-y-6">
         <div className="text-center space-y-2">
-          <h1 className="text-2xl font-bold text-slate-800">
-            ¡Te han invitado!
-          </h1>
-          <p className="text-slate-600">
-            Has sido invitado a unirte a
-          </p>
+          <h1 className="text-2xl font-bold text-slate-800">¡Te han invitado!</h1>
+          <p className="text-slate-600">Has sido invitado a unirte a</p>
           <p className="text-xl font-semibold text-indigo-600">
             {invitation?.tribbuId?.name}
           </p>
@@ -117,15 +100,15 @@ function InvitationPage() {
 
         <div className="flex flex-col gap-3">
           <button
-            onClick={handleAccept}
-            disabled={loading}
+            onClick={() => handleAction("accept")}
+            disabled={actionLoading}
             className="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-2 rounded-md transition disabled:opacity-50"
           >
-            {loading ? "Procesando..." : "Aceptar invitación"}
+            {actionLoading ? "Procesando..." : "Aceptar invitación"}
           </button>
           <button
-            onClick={handleDecline}
-            disabled={loading}
+            onClick={() => handleAction("decline")}
+            disabled={actionLoading}
             className="w-full bg-slate-300 hover:bg-slate-400 text-slate-700 font-medium py-2 rounded-md transition disabled:opacity-50"
           >
             Rechazar
