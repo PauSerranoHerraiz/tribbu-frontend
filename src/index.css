@@ -54,3 +54,29 @@ margin:0;
     color: white;
     border-radius: 12px;
 }
+
+@media (max-width: 768px) {
+  .rbc-calendar {
+    font-size: 0.875rem;
+  }
+  
+  .rbc-toolbar {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .rbc-toolbar-label {
+    font-size: 1rem;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  button, a, .rbc-event {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+body {
+  overflow-x: hidden;
+}
