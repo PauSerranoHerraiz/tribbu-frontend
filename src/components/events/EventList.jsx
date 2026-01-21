@@ -50,21 +50,9 @@ function EventList({ events, onEventUpdated, onEventDeleted, canEdit = false, tr
     return { style };
   };
 
-  if (!events || events.length === 0)
-    return (
-      <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-8 text-center">
-        <p className="text-slate-500 italic">
-          No hay eventos programados
-        </p>
-        {canEdit && tribbuId && (
-          <p className="text-slate-400 text-sm mt-2">
-            Haz click en el calendario para crear un evento
-          </p>
-        )}
-      </div>
-    );
+  const hasEvents = Array.isArray(events) && events.length > 0;
 
-  const calendarEvents = events.map((event) => {
+  const calendarEvents = (events || []).map((event) => {
     let title = event.completed ? '✓ ' : '';
     title += event.title;
 
@@ -77,7 +65,7 @@ function EventList({ events, onEventUpdated, onEventDeleted, canEdit = false, tr
     }
 
     if (event.responsibles && event.responsibles.length > 0) {
-      const respNames = event.responsibles.map(r => r.name || r).join(', ');
+      const respNames = event.responsibles.map((r) => r.name || r).join(', ');
       title += ` [${respNames}]`;
     }
 
@@ -93,6 +81,17 @@ function EventList({ events, onEventUpdated, onEventDeleted, canEdit = false, tr
   return (
     <>
       <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-4">
+        {!hasEvents && (
+          <div className="mb-4 text-center text-slate-500 italic">
+            <p>No hay eventos programados</p>
+            {canEdit && tribbuId && (
+              <p className="text-slate-400 text-sm mt-1">
+                Haz click en el calendario para crear un evento
+              </p>
+            )}
+          </div>
+        )}
+
         <div className="mb-4 flex gap-4 text-sm">
           <div className="flex items-center gap-2">
             <div className="w-4 h-4 rounded bg-indigo-500"></div>
