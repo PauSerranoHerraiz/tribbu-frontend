@@ -17,6 +17,7 @@ import { AuthContext } from "./context/auth.context";
 import EventsPage from "./components/events/EventsPage";
 import DemoPage from "./pages/DemoPage";
 import InvitationPage from "./pages/InvitationPage";
+import About from "./pages/About";
 
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
           <Route path="/tribbus/:tribbuId" element={<TribbuDetailsPage />} />
           <Route path="/events" element={<EventsPage />} />
           <Route path="/invitations/:invitationId" element={<InvitationPage />} />
+          <Route path="/about" element={<About />} />
         </Routes>
 
       </div>
