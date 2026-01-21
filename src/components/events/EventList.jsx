@@ -6,6 +6,7 @@ import 'moment/locale/es';
 import EventModal from './EventModal';
 
 moment.locale('es');
+moment.updateLocale('es', { week: { dow: 1, doy: 4 } });
 const localizer = momentLocalizer(moment);
 
 function EventList({ events, onEventUpdated, onEventDeleted, canEdit = false, tribbuId = null }) {
@@ -80,36 +81,36 @@ function EventList({ events, onEventUpdated, onEventDeleted, canEdit = false, tr
 
   return (
     <>
-      <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-4">
+      <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-2 sm:p-4">
         {!hasEvents && (
           <div className="mb-4 text-center text-slate-500 italic py-4">
-            <p>No hay eventos programados</p>
+            <p className="text-sm sm:text-base">No hay eventos programados</p>
             {canEdit && tribbuId && (
-              <p className="text-slate-400 text-sm mt-1">
+              <p className="text-slate-400 text-xs sm:text-sm mt-1">
                 Haz click en el calendario para crear un evento
               </p>
             )}
           </div>
         )}
 
-        <div className="mb-4 flex gap-4 text-sm">
+        <div className="mb-4 flex flex-wrap gap-2 sm:gap-4 text-xs sm:text-sm">
           <div className="flex items-center gap-2">
-            <div className="w-4 h-4 rounded bg-indigo-500"></div>
+            <div className="w-3 h-3 sm:w-4 sm:h-4 rounded bg-indigo-500"></div>
             <span className="text-slate-600">Pendiente</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-4 h-4 rounded bg-green-500 opacity-70"></div>
+            <div className="w-3 h-3 sm:w-4 sm:h-4 rounded bg-green-500 opacity-70"></div>
             <span className="text-slate-600">Completado</span>
           </div>
         </div>
 
-        <div className="min-h-[500px]">
+        <div className="min-h-[400px] sm:min-h-[500px] -mx-2 sm:mx-0">
           <Calendar
             localizer={localizer}
             events={calendarEvents}
             startAccessor="start"
             endAccessor="end"
-            style={{ height: 700 }}
+            style={{ height: '100%', minHeight: 500 }}
             onSelectEvent={handleSelectEvent}
             onSelectSlot={handleSelectSlot}
             selectable={canEdit && tribbuId}
@@ -119,8 +120,8 @@ function EventList({ events, onEventUpdated, onEventDeleted, canEdit = false, tr
             view={view}
             onView={(newView) => setView(newView)}
             messages={{
-              next: "Siguiente",
-              previous: "Anterior",
+              next: "Sig.",
+              previous: "Ant.",
               today: "Hoy",
               month: "Mes",
               week: "Semana",
@@ -129,8 +130,8 @@ function EventList({ events, onEventUpdated, onEventDeleted, canEdit = false, tr
               date: "Fecha",
               time: "Hora",
               event: "Evento",
-              noEventsInRange: "No hay eventos en este rango",
-              showMore: (total) => `+ Ver más (${total})`
+              noEventsInRange: "No hay eventos",
+              showMore: (total) => `+${total}`
             }}
             views={['month', 'week', 'day', 'agenda']}
             defaultView="month"

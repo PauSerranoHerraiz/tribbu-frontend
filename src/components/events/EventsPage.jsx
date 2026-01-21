@@ -85,28 +85,28 @@ function EventsPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold text-slate-800">Mis Eventos</h1>
-        <p className="text-slate-600 mt-2">
+    <div className="max-w-7xl mx-auto px-2 sm:px-4 py-4 sm:py-8">
+      <div className="mb-4 sm:mb-6">
+        <h1 className="text-2xl sm:text-3xl font-bold text-slate-800">Mis Eventos</h1>
+        <p className="text-sm sm:text-base text-slate-600 mt-2">
           {allEvents.length === 0
             ? "No tienes eventos próximos"
             : `${allEvents.length} evento${allEvents.length !== 1 ? "s" : ""} en total`}
         </p>
 
         {canEdit && (
-          <div className="mt-4 p-4 bg-indigo-50 border border-indigo-200 rounded-lg">
-            <p className="text-sm text-indigo-700 mb-2">
+          <div className="mt-4 p-3 sm:p-4 bg-indigo-50 border border-indigo-200 rounded-lg">
+            <p className="text-xs sm:text-sm text-indigo-700 mb-2">
               <strong>Consejo:</strong> Haz click en el calendario para crear un evento
             </p>
-            <div className="flex items-center gap-2">
-              <label className="text-sm font-medium text-indigo-700">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+              <label className="text-xs sm:text-sm font-medium text-indigo-700">
                 Crear evento en:
               </label>
               <select
                 value={selectedTribbuId || defaultTribbuId}
                 onChange={(e) => setSelectedTribbuId(e.target.value)}
-                className="text-sm border border-indigo-300 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="text-xs sm:text-sm border border-indigo-300 rounded-md px-2 sm:px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 w-full sm:w-auto"
               >
                 {guardianTribbus.map((tribbu) => (
                   <option key={tribbu._id} value={tribbu._id}>
