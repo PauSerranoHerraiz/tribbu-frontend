@@ -23,7 +23,7 @@ function Navbar() {
   if (isLoading) return null;
 
   return (
-    <nav className="bg-gradient-to-r from-indigo-500 to-violet-500 text-white shadow-md sticky top-0 z-50">
+    <nav>
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
 

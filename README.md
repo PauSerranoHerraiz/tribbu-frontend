@@ -50,10 +50,7 @@ npm install
 
 3. Configura las variables de entorno creando un archivo `.env`:
 ```bash
-VITE_API_URL=http://localhost:5005
-VITE_FIREBASE_API_KEY=<tu-api-key>
-VITE_FIREBASE_AUTH_DOMAIN=<tu-auth-domain>
-# ... (resto de variables de Firebase)
+
 ```
 
 4. Inicia el servidor de desarrollo:
