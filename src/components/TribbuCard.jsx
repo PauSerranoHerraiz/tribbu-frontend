@@ -30,17 +30,21 @@ function TribbuCard({ _id, name, ownerId, members = [] }) {
                     </p>
                 ) : (
                     <ul className="text-sm space-y-1">
-                        {members.map((member) => (
-                            <li
-                                key={member.userId._id}
-                                className="flex items-center gap-2"
-                            >
-                                <span className="text-slate-700">
-                                    {member.userId.name}
-                                </span>
-                                <RoleBadge role={member.role} />
-                            </li>
-                        ))}
+                        {members.map((member) => {
+                            const memberId = member.userId?._id || member.userId;
+                            const memberName = member.userId?.name || "Miembro";
+                            return (
+                              <li
+                                  key={memberId}
+                                  className="flex items-center gap-2"
+                              >
+                                  <span className="text-slate-700">
+                                      {memberName}
+                                  </span>
+                                  <RoleBadge role={member.role} />
+                              </li>
+                            );
+                        })}
                     </ul>
                 )}
             </div>

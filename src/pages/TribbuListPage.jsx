@@ -8,11 +8,24 @@ function TribbuListPage() {
   const [tribbus, setTribbus] = useState([]);
   const { user } = useContext(AuthContext);
 
-  const getAllTribbus = () => {
+ const getAllTribbus = () => {
+    if (!user) return;
+    const userId = String(user._id);
+
     tribbusService
       .getAllTribbus()
       .then((response) => {
-        const userTribbus = response.data.filter(tribbu => tribbu.userId === user?._id);
+        const userTribbus = response.data.filter((tribbu) => {
+          const owner = String(tribbu.ownerId?._id || tribbu.ownerId);
+          const isOwner = owner === userId;
+
+          const isMember = tribbu.members?.some(
+            (m) => String(m.userId?._id || m.userId) === userId
+          );
+
+          return isOwner || isMember;
+        });
+
         setTribbus(userTribbus);
       })
       .catch((error) => console.log(error));
@@ -20,7 +33,7 @@ function TribbuListPage() {
 
   useEffect(() => {
     getAllTribbus();
-  }, []);
+  }, [user]);
 
   return (
     <div className="container mx-auto p-6 space-y-6">
