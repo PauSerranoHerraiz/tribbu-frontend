@@ -39,7 +39,7 @@ function Navbar() {
             {isLoggedIn && (
               <>
                 {[
-                  { to: "/tribbus", label: "Mi Tribbu" },
+                  { to: "/tribbus", label: "Mis Tribbus" },
                   { to: "/create-tribbu", label: "Nueva Tribbu" },
                   { to: "/events", label: "Eventos" },
                 ].map(({ to, label }) => (

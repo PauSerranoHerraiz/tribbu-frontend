@@ -1,5 +1,5 @@
 export const demoTribbu = {
-  name: "Familia Serrano",
+  name: "Familia Stark",
   members: [
     { name: "Mamá", role: "Guardiana" },
     { name: "Papá", role: "Guardián" },
