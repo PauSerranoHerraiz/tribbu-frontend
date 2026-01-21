@@ -80,3 +80,58 @@ margin:0;
 body {
   overflow-x: hidden;
 }
+
+@media (max-width: 768px) {
+  .rbc-calendar {
+    font-size: 0.75rem;
+  }
+  
+  .rbc-toolbar {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: stretch;
+  }
+  
+  .rbc-toolbar-label {
+    font-size: 0.875rem;
+    text-align: center;
+    order: -1;
+  }
+
+  .rbc-btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 0.25rem;
+  }
+
+  .rbc-btn-group button {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+  }
+  
+  .rbc-header {
+    padding: 0.25rem;
+    font-size: 0.625rem;
+  }
+
+  .rbc-event {
+    padding: 0.125rem;
+    font-size: 0.625rem;
+  }
+
+  .rbc-date-cell {
+    padding: 0.125rem;
+  }
+
+  .rbc-month-view {
+    border: none;
+  }
+
+  .rbc-day-bg + .rbc-day-bg {
+    border-left: 1px solid #ddd;
+  }
+
+  .rbc-month-row + .rbc-month-row {
+    border-top: 1px solid #ddd;
+  }
+}
