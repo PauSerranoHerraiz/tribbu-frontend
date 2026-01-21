@@ -1,6 +1,7 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/auth.context";
+import logo from "./images/tribbu-logo.png"
 
 function Navbar() {
   const { isLoggedIn, isLoading, user, logOutUser } = useContext(AuthContext);
@@ -29,7 +30,7 @@ function Navbar() {
           <Link to="/" className="flex items-center gap-2 flex-shrink-0">
             <img
               className="h-8 md:h-15 transition-transform hover:scale-105"
-              src="/images/tribbu-logo.png"
+              src={logo}
               alt="Tribbu Logo"
             />
           </Link>
