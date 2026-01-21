@@ -4,7 +4,7 @@ function Layout({ children }) {
   return (
     <div className="min-h-screen flex flex-col bg-slate-50">
 
-      <header className="bg-gradient-to-r from-indigo-500 to-violet-500 text-white shadow-2xl sticky top-0 z-auto py-3">
+      <header className="bg-gradient-to-r from-indigo-500 to-violet-500 text-white shadow-2xl sticky top-0 z-100 py-3">
         <Navbar />
       </header> 
 
