@@ -6,7 +6,7 @@ La aplicación está construida como una **Single Page Application (SPA)**, prio
 
 ---
 
-## 🚀 Características principales
+## Características principales
 
 - **Crear y gestionar Tribbus**: Forma grupos organizados (familia, amigos, comunidad)
 - **Calendario de eventos**: Visualiza y organiza eventos de todas tus tribbus
