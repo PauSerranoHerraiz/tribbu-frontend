@@ -142,7 +142,7 @@ Este proyecto es privado y creado por Pau Serrano Herraiz.
 
 ---
 
-## 👤 Autor
+## Autor
 
 **Pau Serrano Herraiz** - Junior Full Stack Developer
 
