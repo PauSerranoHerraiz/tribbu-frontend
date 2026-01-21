@@ -82,7 +82,7 @@ function EventList({ events, onEventUpdated, onEventDeleted, canEdit = false, tr
     <>
       <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-4">
         {!hasEvents && (
-          <div className="mb-4 text-center text-slate-500 italic">
+          <div className="mb-4 text-center text-slate-500 italic py-4">
             <p>No hay eventos programados</p>
             {canEdit && tribbuId && (
               <p className="text-slate-400 text-sm mt-1">
@@ -103,38 +103,40 @@ function EventList({ events, onEventUpdated, onEventDeleted, canEdit = false, tr
           </div>
         </div>
 
-        <Calendar
-          localizer={localizer}
-          events={calendarEvents}
-          startAccessor="start"
-          endAccessor="end"
-          style={{ height: 700 }}
-          onSelectEvent={handleSelectEvent}
-          onSelectSlot={handleSelectSlot}
-          selectable={canEdit && tribbuId}
-          eventPropGetter={eventStyleGetter}
-          date={date}
-          onNavigate={(newDate) => setDate(newDate)}
-          view={view}
-          onView={(newView) => setView(newView)}
-          messages={{
-            next: "Siguiente",
-            previous: "Anterior",
-            today: "Hoy",
-            month: "Mes",
-            week: "Semana",
-            day: "Día",
-            agenda: "Agenda",
-            date: "Fecha",
-            time: "Hora",
-            event: "Evento",
-            noEventsInRange: "No hay eventos en este rango",
-            showMore: (total) => `+ Ver más (${total})`
-          }}
-          views={['month', 'week', 'day', 'agenda']}
-          defaultView="month"
-          popup
-        />
+        <div className="min-h-[500px]">
+          <Calendar
+            localizer={localizer}
+            events={calendarEvents}
+            startAccessor="start"
+            endAccessor="end"
+            style={{ height: 700 }}
+            onSelectEvent={handleSelectEvent}
+            onSelectSlot={handleSelectSlot}
+            selectable={canEdit && tribbuId}
+            eventPropGetter={eventStyleGetter}
+            date={date}
+            onNavigate={(newDate) => setDate(newDate)}
+            view={view}
+            onView={(newView) => setView(newView)}
+            messages={{
+              next: "Siguiente",
+              previous: "Anterior",
+              today: "Hoy",
+              month: "Mes",
+              week: "Semana",
+              day: "Día",
+              agenda: "Agenda",
+              date: "Fecha",
+              time: "Hora",
+              event: "Evento",
+              noEventsInRange: "No hay eventos en este rango",
+              showMore: (total) => `+ Ver más (${total})`
+            }}
+            views={['month', 'week', 'day', 'agenda']}
+            defaultView="month"
+            popup
+          />
+        </div>
       </div>
 
       {isModalOpen && (
