@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import tribbusService from "../services/tribbu.service"; 
-import AddTribbu from "../components/CreateTribbu"; 
 import TribbuCard from "../components/TribbuCard";
+import SkeletonCard from "../components/ui/SkeletonCard";
 import EmptyState from "../components/ui/EmptyState";
 import { AuthContext } from "../context/auth.context";
 
@@ -40,22 +40,21 @@ function TribbuListPage() {
     getAllTribbus();
   }, [user]);
 
-  if (loading) {
-    return (
-      <div className="container mx-auto p-6">
-        <p className="text-center text-slate-500">Cargando tribbus...</p>
-      </div>
-    );
-  }
-
   return (
     <div className="container mx-auto p-6 space-y-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {tribbus.length === 0 ? (
+        {loading ? (
+          <>
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+          </>
+        ) : tribbus.length === 0 ? (
           <div className="col-span-full">
             <EmptyState
-              title="No tienes Tribbus todavía"
-              description="Crea tu primera Tribbu para empezar a organizar planes con tu grupo"
+              icon="🎉"
+              title="No tienes tribbus todavía"
+              description="Crea tu primer tribbu para empezar a organizar planes con tu grupo"
               action={
                 <Link to="/create-tribbu" className="btn btn-primary">
                   Crear Tribbu

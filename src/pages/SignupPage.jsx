@@ -4,61 +4,105 @@ import { AuthContext } from "../context/auth.context";
 import authService from "../services/auth.service";
 import toast from "react-hot-toast";
 
+function Spinner({ className = "w-5 h-5" }) {
+  return (
+    <svg className={`${className} animate-spin`} viewBox="0 0 24 24" fill="none">
+      <circle
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="currentColor"
+        strokeWidth="4"
+        className="opacity-25"
+      />
+      <path
+        fill="currentColor"
+        className="opacity-75"
+        d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+      />
+    </svg>
+  );
+}
+
 function SignupPage() {
   const { loginWithGoogle } = useContext(AuthContext);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [name, setName] = useState("");
-  const [errorMessage, setErrorMessage] = useState(undefined);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleSignupSubmit = (e) => {
+  const handleSignupSubmit = async (e) => {
     e.preventDefault();
-    setErrorMessage(undefined);
+    setErrorMessage(null);
+    setLoading(true);
 
     if (password !== confirmPassword) {
-      setErrorMessage("Las contraseñas no coinciden");
       toast.error("Las contraseñas no coinciden");
+      setLoading(false);
       return;
     }
 
     if (password.length < 6) {
-      setErrorMessage("La contraseña debe tener al menos 6 caracteres");
       toast.error("La contraseña debe tener al menos 6 caracteres");
+      setLoading(false);
       return;
     }
 
-    authService
-      .signup({ email, password, name })
-      .then(() => {
-        toast.success("¡Cuenta creada! Redirigiendo al login...");
-        navigate("/login");
-      })
-      .catch((error) => {
-        const message = error.response?.data?.message || "Error al crear la cuenta";
-        setErrorMessage(message);
-        toast.error(message);
-      });
+    try {
+      await authService.signup({ email, password, name });
+      toast.success("¡Cuenta creada!");
+      navigate("/login");
+    } catch (error) {
+      const message =
+        error.response?.data?.message || "Error al crear la cuenta";
+      setErrorMessage(message);
+      toast.error(message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleGoogleSignup = async () => {
+    setErrorMessage(null);
+    setLoading(true);
+
     try {
       await loginWithGoogle();
-      toast.success("¡Bienvenido!");
+      toast.success("¡Bienvenido a Tribbu!");
       navigate("/");
-    } catch (error) {
+    } catch {
       const message = "Error al registrarse con Google";
       setErrorMessage(message);
       toast.error(message);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4">
-      <div className="w-full max-w-md bg-white rounded-xl shadow-md p-8 space-y-6">
+      {/* Overlay de carga */}
+      {loading && (
+        <div className="fixed inset-0 bg-white/70 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-white border border-slate-200 rounded-xl shadow-lg px-6 py-5 flex flex-col items-center gap-3">
+            <Spinner className="w-8 h-8 text-indigo-500" />
+            <p className="text-sm text-slate-600 font-medium">
+              Creando tu Tribbu…
+            </p>
+          </div>
+        </div>
+      )}
 
+      <div
+        className={`w-full max-w-md bg-white rounded-xl shadow-md p-8 space-y-6 transition-all duration-300 ${
+          loading ? "opacity-60 scale-[0.98]" : ""
+        }`}
+      >
         <div className="text-center space-y-1">
           <h1 className="text-2xl font-bold text-slate-800">
             Crea tu cuenta
@@ -69,7 +113,6 @@ function SignupPage() {
         </div>
 
         <form onSubmit={handleSignupSubmit} className="space-y-4">
-
           <div>
             <label className="block text-sm font-medium text-slate-600 mb-1">
               Nombre
@@ -78,8 +121,9 @@ function SignupPage() {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              disabled={loading}
               required
+              className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
 
@@ -91,8 +135,9 @@ function SignupPage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              disabled={loading}
               required
+              className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
 
@@ -104,9 +149,10 @@ function SignupPage() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              disabled={loading}
               required
               minLength={6}
+              className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
             <p className="text-xs text-slate-500 mt-1">
               Mínimo 6 caracteres
@@ -115,15 +161,17 @@ function SignupPage() {
 
           <div>
             <label className="block text-sm font-medium text-slate-600 mb-1">
-              Confirmar Contraseña
+              Confirmar contraseña
             </label>
             <input
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              disabled={loading}
               required
+              className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
+
             {confirmPassword && password !== confirmPassword && (
               <p className="text-xs text-red-600 mt-1">
                 Las contraseñas no coinciden
@@ -137,17 +185,24 @@ function SignupPage() {
           </div>
 
           {errorMessage && (
-            <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded p-2">
+            <div className="text-sm text-red-600 bg-red-50 border border-red-200 rounded p-2">
               {errorMessage}
-            </p>
+            </div>
           )}
 
           <button
             type="submit"
-            className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2 rounded-md transition disabled:opacity-50 disabled:cursor-not-allowed"
-            disabled={password !== confirmPassword || password.length < 6}
+            disabled={loading || password !== confirmPassword || password.length < 6}
+            className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2 rounded-md transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
-            Crear Cuenta
+            {loading ? (
+              <>
+                <Spinner className="w-4 h-4 text-white" />
+                Creando cuenta…
+              </>
+            ) : (
+              "Crear cuenta"
+            )}
           </button>
         </form>
 
@@ -156,13 +211,16 @@ function SignupPage() {
             <div className="w-full border-t border-slate-300"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-white text-slate-500">O regístrate con</span>
+            <span className="px-2 bg-white text-slate-500">
+              O regístrate con
+            </span>
           </div>
         </div>
 
         <button
           onClick={handleGoogleSignup}
-          className="w-full flex items-center justify-center gap-3 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium py-2.5 px-4 rounded-md transition"
+          disabled={loading}
+          className="w-full flex items-center justify-center gap-3 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium py-2.5 px-4 rounded-md transition disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <svg className="w-5 h-5" viewBox="0 0 24 24">
             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -175,14 +233,10 @@ function SignupPage() {
 
         <p className="text-sm text-center text-slate-500">
           ¿Ya tienes cuenta?{" "}
-          <Link
-            to="/login"
-            className="text-indigo-500 hover:underline font-medium"
-          >
-            Iniciar Sesión
+          <Link to="/login" className="text-indigo-500 hover:underline font-medium">
+            Iniciar sesión
           </Link>
         </p>
-
       </div>
     </div>
   );
