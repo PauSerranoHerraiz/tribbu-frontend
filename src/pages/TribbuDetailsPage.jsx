@@ -174,14 +174,14 @@ function TribbuDetailsPage() {
         <div className="flex flex-wrap gap-3">
           <Link
             to="/tribbus"
-            className="text-sm text-indigo-50 bg-indigo-500 hover:bg-indigo-600 px-4 py-2 rounded-xl transition"
+            className="text-sm text-indigo-50 bg-gradient-to-r from-indigo-500 to-violet-500 hover:bg-indigo-600 px-4 py-2 rounded-xl transition"
           >
             Volver a Tribbus
           </Link>
           {isGuardian && (
             <Link
               to={`/tribbus/edit/${tribbu._id}`}
-              className="text-sm text-indigo-600 bg-indigo-100 hover:bg-indigo-200 px-4 py-2 rounded-xl transition"
+              className="text-sm text-indigo-600 bg-violet-100 hover:bg-indigo-200 px-4 py-2 rounded-xl transition"
             >
               Editar Tribbu
             </Link>

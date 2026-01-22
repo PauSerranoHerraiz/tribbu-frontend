@@ -50,7 +50,7 @@ function CreateTribbu({ refreshTribbus }) {
 
           <button
             type="submit"
-            className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2 rounded-xl transition"
+            className="w-full bg-gradient-to-r from-indigo-500 to-violet-500 hover:bg-indigo-600 text-white font-medium py-2 rounded-xl transition"
           >
             Crear Tribbu
           </button>

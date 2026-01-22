@@ -8,7 +8,7 @@ export default function Button({
 
   const variants = {
     primary:
-      "bg-indigo-500 text-white hover:bg-indigo-600",
+      "bg-gradient-to-r from-indigo-500 to-violet-500 text-white hover:bg-indigo-600",
     secondary:
       "bg-violet-400 text-white hover:bg-violet-500",
     ghost:
