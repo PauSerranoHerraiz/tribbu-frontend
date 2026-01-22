@@ -6,6 +6,8 @@ import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "moment/locale/es";
 import EventModal from "./EventModal";
+import CalendarToolbar from "../ui/CalendarToolbar.jsx";
+
 
 moment.locale("es");
 moment.updateLocale("es", { week: { dow: 1, doy: 4 } });
@@ -82,7 +84,6 @@ function EventList({ events, onEventUpdated, onEventDeleted, canEdit = false, tr
         start: new Date(event.start),
         end: new Date(event.end),
         resource: event,
-        // Tooltip simple usando title nativo
         titleAttribute: `Responsables: ${event.responsibles?.map((r) => r.name || r).join(", ") || "Ninguno"}`,
       })),
     [events]
@@ -99,10 +100,10 @@ function EventList({ events, onEventUpdated, onEventDeleted, canEdit = false, tr
               {view === "month"
                 ? "No hay eventos este mes"
                 : view === "week"
-                ? "No hay eventos esta semana"
-                : view === "day"
-                ? "No hay eventos hoy"
-                : "No hay eventos programados"}
+                  ? "No hay eventos esta semana"
+                  : view === "day"
+                    ? "No hay eventos hoy"
+                    : "No hay eventos programados"}
             </p>
             {canEdit && tribbuId && (
               <p className="text-slate-400 text-xs sm:text-sm mt-1">
@@ -125,6 +126,9 @@ function EventList({ events, onEventUpdated, onEventDeleted, canEdit = false, tr
 
         <div className="min-h-[400px] sm:min-h-[500px] -mx-2 sm:mx-0">
           <Calendar
+            components={{
+              toolbar: CalendarToolbar,
+            }}
             localizer={localizer}
             events={calendarEvents}
             startAccessor="start"
