@@ -5,7 +5,7 @@ function DemoPage() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-700">
 
-      <section className="bg-indigo-600 text-white py-20 px-6 text-center rounded-b-3xl shadow-lg">
+      <section className="bg-indigo-500 text-white py-20 px-6 text-center rounded-b-3xl shadow-lg">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">
           Organiza planes en grupo sin estrés
         </h1>
@@ -91,7 +91,7 @@ function DemoPage() {
           </div>
           <div className="flex items-start space-x-2">
             <span className="text-indigo-600 font-bold">✓</span>
-            <p className="text-gray-700">Diseñado para ser sencillo y cozy</p>
+            <p className="text-gray-700">Diseñado para ser sencillo</p>
           </div>
           <div className="flex items-start space-x-2">
             <span className="text-indigo-600 font-bold">✓</span>
@@ -103,7 +103,7 @@ function DemoPage() {
       <div className="mt-12 text-center pb-16">
         <Link
           to="/signup"
-          className="inline-block bg-indigo-600 text-white px-8 py-4 rounded-xl font-semibold hover:bg-indigo-700 transition shadow-lg hover:shadow-xl"
+          className="inline-block bg-indigo-500 text-white px-8 py-4 rounded-xl font-semibold hover:bg-indigo-700 transition shadow-lg hover:shadow-xl"
         >
           Crea tu Tribbu y empieza ahora!
         </Link>
