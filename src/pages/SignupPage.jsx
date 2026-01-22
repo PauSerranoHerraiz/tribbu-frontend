@@ -87,10 +87,10 @@ function SignupPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4">
       {loading && (
-        <div className="fixed inset-0 bg-white/70 backdrop-blur-sm flex items-center justify-center z-50">
-          <div className="bg-white border border-slate-200 rounded-xl shadow-lg px-6 py-5 flex flex-col items-center gap-3">
-            <Spinner className="w-8 h-8 text-indigo-500" />
-            <p className="text-sm text-slate-600 font-medium">
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-[9999]">
+          <div className="bg-white rounded-xl shadow-2xl px-8 py-6 flex flex-col items-center gap-4 animate-in fade-in zoom-in duration-200">
+            <Spinner className="w-10 h-10 text-indigo-500" />
+            <p className="text-sm font-medium text-slate-700">
               Creando tu Tribbu…
             </p>
           </div>
@@ -99,7 +99,7 @@ function SignupPage() {
 
       <div
         className={`w-full max-w-md bg-white rounded-xl shadow-md p-8 space-y-6 transition-all duration-300 ${
-          loading ? "opacity-60 scale-[0.98]" : ""
+          loading ? "opacity-50" : "opacity-100"
         }`}
       >
         <div className="text-center space-y-1">
@@ -122,7 +122,7 @@ function SignupPage() {
               onChange={(e) => setName(e.target.value)}
               disabled={loading}
               required
-              className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-60"
             />
           </div>
 
@@ -136,7 +136,7 @@ function SignupPage() {
               onChange={(e) => setEmail(e.target.value)}
               disabled={loading}
               required
-              className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-60"
             />
           </div>
 
@@ -151,7 +151,7 @@ function SignupPage() {
               disabled={loading}
               required
               minLength={6}
-              className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-60"
             />
             <p className="text-xs text-slate-500 mt-1">
               Mínimo 6 caracteres
@@ -168,7 +168,7 @@ function SignupPage() {
               onChange={(e) => setConfirmPassword(e.target.value)}
               disabled={loading}
               required
-              className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-60"
             />
 
             {confirmPassword && password !== confirmPassword && (

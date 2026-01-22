@@ -79,12 +79,11 @@ function LoginPage() {
 
   return (
     <div className="min-h-screen bg-slate-50 flex justify-center items-center px-4">
-      {/* Overlay de carga */}
       {loading && (
-        <div className="fixed inset-0 bg-white/70 backdrop-blur-sm flex items-center justify-center z-50">
-          <div className="bg-white border border-slate-200 rounded-xl shadow-lg px-6 py-5 flex flex-col items-center gap-3">
-            <Spinner className="w-8 h-8 text-indigo-500" />
-            <p className="text-sm text-slate-600 font-medium">
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-[9999]">
+          <div className="bg-white rounded-xl shadow-2xl px-8 py-6 flex flex-col items-center gap-4 animate-in fade-in zoom-in duration-200">
+            <Spinner className="w-10 h-10 text-indigo-500" />
+            <p className="text-sm font-medium text-slate-700">
               Preparando tu Tribbu…
             </p>
           </div>
@@ -93,7 +92,7 @@ function LoginPage() {
 
       <div
         className={`bg-white border border-slate-200 rounded-xl shadow-sm p-6 w-full max-w-sm space-y-4 transition-all duration-300 ${
-          loading ? "opacity-60 scale-[0.98]" : ""
+          loading ? "opacity-50" : "opacity-100"
         }`}
       >
         <h1 className="text-2xl font-semibold text-slate-800">Login</h1>
@@ -113,7 +112,7 @@ function LoginPage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-60"
               required
               disabled={loading}
             />
@@ -127,7 +126,7 @@ function LoginPage() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-60"
               required
               disabled={loading}
             />
