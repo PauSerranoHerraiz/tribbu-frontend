@@ -86,7 +86,6 @@ function SignupPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4">
-      {/* Overlay de carga */}
       {loading && (
         <div className="fixed inset-0 bg-white/70 backdrop-blur-sm flex items-center justify-center z-50">
           <div className="bg-white border border-slate-200 rounded-xl shadow-lg px-6 py-5 flex flex-col items-center gap-3">

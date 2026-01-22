@@ -16,17 +16,10 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 .logo {
-    max-width: 70px;
-    z-index: 2;
-}
-
-
-
-li {
-list-style-type: none;
-padding: 0;
-margin:0;
+  max-width: 70px;
+  z-index: 2;
 }
 
 .logo:hover {
@@ -35,96 +28,84 @@ margin:0;
   border-radius: 12px;
 }
 
+li {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
 .menu li a {
-    color: #ffffff;
-    text-decoration: none;
-    font-size: 16px;
-    padding: 8px 12px;
-    border-radius: 12px;
-    transition: background 0.3s;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 16px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  transition: background 0.3s;
 }
 
 .menu li a:hover {
-    background-color: #734E57;
-    border-radius: 12px;
+  background-color: #734E57;
+  border-radius: 12px;
 }
 
 .menu li a.active {
-    background-color: #904E55;
-    color: white;
-    border-radius: 12px;
-}
-
-@media (max-width: 768px) {
-  .rbc-calendar {
-    font-size: 0.875rem;
-  }
-  
-  .rbc-toolbar {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  
-  .rbc-toolbar-label {
-    font-size: 1rem;
-  }
-}
-
-@media (hover: none) and (pointer: coarse) {
-  button, a, .rbc-event {
-    min-height: 44px;
-    min-width: 44px;
-  }
+  background-color: #904E55;
+  color: white;
+  border-radius: 12px;
 }
 
 body {
   overflow-x: hidden;
 }
 
-@media (max-width: 768px) {
+
+@media (max-width: 768px), (hover: none) and (pointer: coarse) {
+
   .rbc-calendar {
     font-size: 0.75rem;
   }
-  
+
   .rbc-toolbar {
     flex-direction: column;
     gap: 0.5rem;
     align-items: stretch;
   }
-  
+
   .rbc-toolbar-label {
     font-size: 0.875rem;
     text-align: center;
     order: -1;
+    margin-bottom: 0.25rem;
   }
 
   .rbc-btn-group {
     display: flex;
     justify-content: center;
     gap: 0.25rem;
+    flex-wrap: wrap;
   }
 
   .rbc-btn-group button {
     padding: 0.5rem 0.75rem;
     font-size: 0.75rem;
+    min-height: 40px;
+    min-width: 40px;
   }
-  
+
   .rbc-header {
     padding: 0.25rem;
     font-size: 0.625rem;
   }
 
   .rbc-event {
-    padding: 0.125rem;
-    font-size: 0.625rem;
+    padding: 0.5rem 0.5rem;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    border-radius: 6px;
   }
 
   .rbc-date-cell {
     padding: 0.125rem;
-  }
-
-  .rbc-month-view {
-    border: none;
   }
 
   .rbc-day-bg + .rbc-day-bg {
@@ -133,5 +114,17 @@ body {
 
   .rbc-month-row + .rbc-month-row {
     border-top: 1px solid #ddd;
+  }
+
+  .rbc-month-view {
+    border: none;
+    min-height: 400px;
+  }
+}
+
+@media (min-width: 769px) {
+  .rbc-event {
+    padding: 2px 4px;
+    font-size: 0.85rem;
   }
 }

@@ -56,7 +56,7 @@ function TribbuListPage() {
               title="No tienes tribbus todavía"
               description="Crea tu primer tribbu para empezar a organizar planes con tu grupo"
               action={
-                <Link to="/create-tribbu" className="btn btn-primary">
+                <Link to="/create-tribbu" className="btn btn-primary rounded-xl bg-gradient-to-r from-indigo-500 to-violet-500">
                   Crear Tribbu
                 </Link>
               }

@@ -8,7 +8,6 @@ import "moment/locale/es";
 import EventModal from "./EventModal";
 import CalendarToolbar from "../ui/CalendarToolbar.jsx";
 
-
 moment.locale("es");
 moment.updateLocale("es", { week: { dow: 1, doy: 4 } });
 const localizer = momentLocalizer(moment);
@@ -38,12 +37,20 @@ const getEventStyle = (event) => ({
   },
 });
 
-function EventList({ events, onEventUpdated, onEventDeleted, canEdit = false, tribbuId = null }) {
+function EventList({
+  events,
+  onEventUpdated,
+  onEventDeleted,
+  canEdit = false,
+  tribbuId = null,
+}) {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [date, setDate] = useState(new Date());
   const [view, setView] = useState("month");
+
+  const isMobile = window.innerWidth < 640;
 
   const handleSelectEvent = (event) => {
     setSelectedEvent(event.resource);
@@ -84,7 +91,9 @@ function EventList({ events, onEventUpdated, onEventDeleted, canEdit = false, tr
         start: new Date(event.start),
         end: new Date(event.end),
         resource: event,
-        titleAttribute: `Responsables: ${event.responsibles?.map((r) => r.name || r).join(", ") || "Ninguno"}`,
+        titleAttribute: `Responsables: ${
+          event.responsibles?.map((r) => r.name || r).join(", ") || "Ninguno"
+        }`,
       })),
     [events]
   );
@@ -100,10 +109,10 @@ function EventList({ events, onEventUpdated, onEventDeleted, canEdit = false, tr
               {view === "month"
                 ? "No hay eventos este mes"
                 : view === "week"
-                  ? "No hay eventos esta semana"
-                  : view === "day"
-                    ? "No hay eventos hoy"
-                    : "No hay eventos programados"}
+                ? "No hay eventos esta semana"
+                : view === "day"
+                ? "No hay eventos hoy"
+                : "No hay eventos programados"}
             </p>
             {canEdit && tribbuId && (
               <p className="text-slate-400 text-xs sm:text-sm mt-1">
@@ -126,9 +135,7 @@ function EventList({ events, onEventUpdated, onEventDeleted, canEdit = false, tr
 
         <div className="min-h-[400px] sm:min-h-[500px] -mx-2 sm:mx-0">
           <Calendar
-            components={{
-              toolbar: CalendarToolbar,
-            }}
+            components={{ toolbar: CalendarToolbar }}
             localizer={localizer}
             events={calendarEvents}
             startAccessor="start"
@@ -144,9 +151,11 @@ function EventList({ events, onEventUpdated, onEventDeleted, canEdit = false, tr
             onView={setView}
             onEventDrop={handleEventDrop}
             onEventResize={handleEventResize}
-            draggableAccessor={() => canEdit}
-            resizable
-            tooltipAccessor={(event) => event.titleAttribute} // tooltip nativo
+            draggableAccessor={() => !isMobile && canEdit}
+            resizable={!isMobile}
+            tooltipAccessor={(event) => event.titleAttribute}
+            views={isMobile ? ["month", "day"] : ["month", "week", "day", "agenda"]}
+            defaultView={isMobile ? "day" : "month"}
             messages={{
               next: "Sig.",
               previous: "Ant.",
@@ -161,8 +170,6 @@ function EventList({ events, onEventUpdated, onEventDeleted, canEdit = false, tr
               noEventsInRange: "No hay eventos",
               showMore: (total) => `+${total}`,
             }}
-            views={["month", "week", "day", "agenda"]}
-            defaultView="month"
             popup
           />
         </div>

@@ -1,6 +1,6 @@
 import logo from "/images/tribbu-logo-navigator.svg"
 
-function EmptyState({ icon, title, description, action }) {
+function EmptyState({ title, description, action }) {
   return (
     <div className="flex flex-col items-center justify-center py-12 text-center">
       <img className="max-h-18 mx-auto mb-4" src={logo} alt="" />
