@@ -56,7 +56,7 @@ const handleSubmit = async (e) => {
             placeholder="Nombre del cachorro"
             onChange={(e) => setName(e.target.value)}
             required
-            className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm
+            className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm
                        focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
         </div>
@@ -70,7 +70,7 @@ const handleSubmit = async (e) => {
             value={birthDate}
             onChange={(e) => setBirthDate(e.target.value)}
             required
-            className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm
+            className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm
                        focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
         </div>
@@ -84,13 +84,13 @@ const handleSubmit = async (e) => {
             placeholder="Comentarios sobre el cachorro"
             onChange={(e) => setNotes(e.target.value)}
             rows={3}
-            className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm
+            className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm
                        focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
         </div>
 
         {error && (
-          <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded p-2">
+          <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-xl p-2">
             {error}
           </p>
         )}
@@ -98,7 +98,7 @@ const handleSubmit = async (e) => {
         <button
           type="submit"
           disabled={loading}
-          className={`w-full py-2 rounded-md font-medium transition
+          className={`w-full py-2 rounded-xl font-medium transition
             ${loading
               ? "bg-slate-300 text-slate-500 cursor-not-allowed"
               : "bg-indigo-500 text-white hover:bg-indigo-600"

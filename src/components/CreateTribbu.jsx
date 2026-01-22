@@ -43,14 +43,14 @@ function CreateTribbu({ refreshTribbus }) {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Tribbu Name"
-              className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
               required
             />
           </div>
 
           <button
             type="submit"
-            className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2 rounded-md transition"
+            className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2 rounded-xl transition"
           >
             Crear Tribbu
           </button>

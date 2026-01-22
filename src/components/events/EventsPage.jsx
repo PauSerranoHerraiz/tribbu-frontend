@@ -95,7 +95,7 @@ function EventsPage() {
         </p>
 
         {canEdit && (
-          <div className="mt-4 p-3 sm:p-4 bg-indigo-50 border border-indigo-200 rounded-lg">
+          <div className="mt-4 p-3 sm:p-4 bg-indigo-50 border border-indigo-200 rounded-xl">
             <p className="text-xs sm:text-sm text-indigo-700 mb-2">
               <strong>Consejo:</strong> Haz click en el calendario para crear un evento
             </p>
@@ -106,7 +106,7 @@ function EventsPage() {
               <select
                 value={selectedTribbuId || defaultTribbuId}
                 onChange={(e) => setSelectedTribbuId(e.target.value)}
-                className="text-xs sm:text-sm border border-indigo-300 rounded-md px-2 sm:px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 w-full sm:w-auto"
+                className="text-xs sm:text-sm border border-indigo-300 rounded-xl px-2 sm:px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 w-full sm:w-auto"
               >
                 {guardianTribbus.map((tribbu) => (
                   <option key={tribbu._id} value={tribbu._id}>

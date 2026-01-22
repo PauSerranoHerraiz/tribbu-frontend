@@ -88,7 +88,7 @@ function Navbar() {
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-lg hover:bg-white/10 transition"
+            className="md:hidden p-2 rounded-xl hover:bg-white/10 transition"
             aria-label="Toggle menu"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -105,7 +105,7 @@ function Navbar() {
           <div className="md:hidden pb-4 space-y-2">
             {isLoggedIn ? (
               <>
-                <div className="flex items-center gap-3 px-4 py-3 bg-white/10 rounded-lg mb-2">
+                <div className="flex items-center gap-3 px-4 py-3 bg-white/10 rounded-xl mb-2">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-300 to-violet-300 flex items-center justify-center text-indigo-900 font-semibold">
                     {user?.name?.[0]}
                   </div>
@@ -121,7 +121,7 @@ function Navbar() {
                     key={to}
                     to={to}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block px-4 py-3 rounded-lg hover:bg-white/10 transition"
+                    className="block px-4 py-3 rounded-xl hover:bg-white/10 transition"
                   >
                     {label}
                   </Link>
@@ -129,7 +129,7 @@ function Navbar() {
                 
                 <button
                   onClick={handleLogout}
-                  className="w-full text-left px-4 py-3 rounded-lg hover:bg-white/10 transition border-t border-white/20 mt-2"
+                  className="w-full text-left px-4 py-3 rounded-xl hover:bg-white/10 transition border-t border-white/20 mt-2"
                 >
                   Salir
                 </button>
@@ -139,14 +139,14 @@ function Navbar() {
                 <Link
                   to="/login"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block px-4 py-3 rounded-lg hover:bg-white/10 transition"
+                  className="block px-4 py-3 rounded-xl hover:bg-white/10 transition"
                 >
                   Entrar
                 </Link>
                 <Link
                   to="/signup"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block px-4 py-3 bg-white/90 text-indigo-600 rounded-lg font-medium text-center"
+                  className="block px-4 py-3 bg-white/90 text-indigo-600 rounded-xl font-medium text-center"
                 >
                   Crear cuenta
                 </Link>

@@ -4,7 +4,7 @@ export default function Button({
   ...props
 }) {
   const base =
-    "px-4 py-2 rounded-lg font-medium transition";
+    "px-4 py-2 rounded-xl font-medium transition";
 
   const variants = {
     primary:

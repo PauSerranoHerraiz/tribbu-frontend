@@ -47,13 +47,13 @@ function AddMember({ tribbuId, onMemberAdded }) {
       </h4>
 
       {error && (
-        <div className="p-3 bg-red-50 border border-red-200 rounded-md">
+        <div className="p-3 bg-red-50 border border-red-200 rounded-xl">
           <p className="text-sm text-red-600">{error}</p>
         </div>
       )}
 
       {success && (
-        <div className="p-3 bg-green-50 border border-green-200 rounded-md">
+        <div className="p-3 bg-green-50 border border-green-200 rounded-xl">
           <p className="text-sm text-green-600">✓ {success}</p>
         </div>
       )}
@@ -67,7 +67,7 @@ function AddMember({ tribbuId, onMemberAdded }) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="usuario@example.com"
-          className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm
+          className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm
                      focus:outline-none focus:ring-2 focus:ring-indigo-500"
           required
         />
@@ -83,7 +83,7 @@ function AddMember({ tribbuId, onMemberAdded }) {
         <select
           value={role}
           onChange={(e) => setRole(e.target.value)}
-          className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm
+          className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm
                      focus:outline-none focus:ring-2 focus:ring-indigo-500"
         >
           <option value="GUARDIÁN">GUARDIÁN</option>
@@ -96,7 +96,7 @@ function AddMember({ tribbuId, onMemberAdded }) {
       <button
         type="submit"
         disabled={!email || loading}
-        className={`w-full py-2 rounded-md font-medium transition
+        className={`w-full py-2 rounded-xl font-medium transition
           ${
             email && !loading
               ? "bg-indigo-500 text-white hover:bg-indigo-600"

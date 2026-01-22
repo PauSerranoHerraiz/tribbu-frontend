@@ -79,7 +79,7 @@ function InvitationPage() {
           <p className="text-red-600 text-lg">{error}</p>
           <button
             onClick={() => navigate("/")}
-            className="w-full bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600 transition"
+            className="w-full bg-indigo-500 text-white px-4 py-2 rounded-xl hover:bg-indigo-600 transition"
           >
             Volver al inicio
           </button>
@@ -98,7 +98,7 @@ function InvitationPage() {
           </p>
         </div>
 
-        <div className="bg-slate-50 rounded-lg p-4 space-y-2">
+        <div className="bg-slate-50 rounded-xl p-4 space-y-2">
           <p className="text-sm text-slate-600">
             <strong>Tu rol:</strong> {invitation?.role}
           </p>
@@ -111,14 +111,14 @@ function InvitationPage() {
           <button
             onClick={() => handleAction("accept")}
             disabled={actionLoading}
-            className="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-2 rounded-md transition disabled:opacity-50"
+            className="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-2 rounded-xl transition disabled:opacity-50"
           >
             {actionLoading ? "Procesando..." : "Aceptar invitación"}
           </button>
           <button
             onClick={() => handleAction("decline")}
             disabled={actionLoading}
-            className="w-full bg-slate-300 hover:bg-slate-400 text-slate-700 font-medium py-2 rounded-md transition disabled:opacity-50"
+            className="w-full bg-slate-300 hover:bg-slate-400 text-slate-700 font-medium py-2 rounded-xl transition disabled:opacity-50"
           >
             Rechazar
           </button>

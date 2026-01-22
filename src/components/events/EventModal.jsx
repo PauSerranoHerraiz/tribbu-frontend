@@ -214,7 +214,7 @@ function EventModal({ event, slotInfo, tribbuId, canEdit, onClose, onEventUpdate
 
             <button
               onClick={onClose}
-              className="w-full bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium py-2 rounded-md transition"
+              className="w-full bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium py-2 rounded-xl transition"
             >
               Cerrar
             </button>
@@ -224,7 +224,7 @@ function EventModal({ event, slotInfo, tribbuId, canEdit, onClose, onEventUpdate
             <div className="flex flex-col">
               <label className="mb-1 text-sm font-medium text-slate-700">Título</label>
               <input
-                className="border border-slate-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="border border-slate-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 placeholder="Título del evento"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -235,7 +235,7 @@ function EventModal({ event, slotInfo, tribbuId, canEdit, onClose, onEventUpdate
             <div className="flex flex-col">
               <label className="mb-1 text-sm font-medium text-slate-700">Cachorro (opcional)</label>
               <select
-                className="border border-slate-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="border border-slate-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 value={childId}
                 onChange={(e) => setChildId(e.target.value)}
               >
@@ -250,7 +250,7 @@ function EventModal({ event, slotInfo, tribbuId, canEdit, onClose, onEventUpdate
 
             <div className="flex flex-col">
               <label className="mb-1 text-sm font-medium text-slate-700">Responsables (opcional)</label>
-              <div className="border border-slate-300 rounded-md p-3 space-y-2 max-h-32 overflow-y-auto bg-white">
+              <div className="border border-slate-300 rounded-xl p-3 space-y-2 max-h-32 overflow-y-auto bg-white">
                 {members.length === 0 ? (
                   <p className="text-sm text-slate-500 italic">No hay miembros disponibles</p>
                 ) : (
@@ -280,7 +280,7 @@ function EventModal({ event, slotInfo, tribbuId, canEdit, onClose, onEventUpdate
               <label className="mb-1 text-sm font-medium text-slate-700">Inicio</label>
               <input
                 type="datetime-local"
-                className="border border-slate-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="border border-slate-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 value={start}
                 onChange={(e) => setStart(e.target.value)}
                 required
@@ -291,7 +291,7 @@ function EventModal({ event, slotInfo, tribbuId, canEdit, onClose, onEventUpdate
               <label className="mb-1 text-sm font-medium text-slate-700">Fin</label>
               <input
                 type="datetime-local"
-                className="border border-slate-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="border border-slate-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 value={end}
                 onChange={(e) => setEnd(e.target.value)}
                 required
@@ -299,7 +299,7 @@ function EventModal({ event, slotInfo, tribbuId, canEdit, onClose, onEventUpdate
             </div>
 
             {!isNewEvent && (
-              <div className="flex items-center gap-2 p-3 bg-slate-50 rounded-md">
+              <div className="flex items-center gap-2 p-3 bg-slate-50 rounded-xl">
                 <input
                   type="checkbox"
                   id="completed"
@@ -321,12 +321,12 @@ function EventModal({ event, slotInfo, tribbuId, canEdit, onClose, onEventUpdate
                   value={newChecklistItem}
                   onChange={(e) => setNewChecklistItem(e.target.value)}
                   placeholder="Añadir ítem"
-                  className="flex-1 border border-slate-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="flex-1 border border-slate-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
                 <button
                   type="button"
                   onClick={handleAddChecklistItem}
-                  className="px-3 bg-indigo-500 hover:bg-indigo-600 text-white font-medium rounded-md"
+                  className="px-3 bg-indigo-500 hover:bg-indigo-600 text-white font-medium rounded-xl"
                 >
                   Añadir
                 </button>
@@ -356,7 +356,7 @@ function EventModal({ event, slotInfo, tribbuId, canEdit, onClose, onEventUpdate
               <button
                 type="submit"
                 disabled={loading}
-                className="flex-1 bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2 rounded-md transition disabled:opacity-50"
+                className="flex-1 bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2 rounded-xl transition disabled:opacity-50"
               >
                 {loading ? "Guardando..." : isNewEvent ? "Crear" : "Guardar"}
               </button>
@@ -366,7 +366,7 @@ function EventModal({ event, slotInfo, tribbuId, canEdit, onClose, onEventUpdate
                   type="button"
                   onClick={handleDelete}
                   disabled={loading}
-                  className="px-4 bg-red-500 hover:bg-red-600 text-white font-medium py-2 rounded-md transition disabled:opacity-50"
+                  className="px-4 bg-red-500 hover:bg-red-600 text-white font-medium py-2 rounded-xl transition disabled:opacity-50"
                 >
                   Eliminar
                 </button>
@@ -375,7 +375,7 @@ function EventModal({ event, slotInfo, tribbuId, canEdit, onClose, onEventUpdate
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium py-2 rounded-md transition"
+                className="px-4 bg-slate-200 hover:bg-slate-300 text-slate-700 font-medium py-2 rounded-xl transition"
               >
                 Cancelar
               </button>

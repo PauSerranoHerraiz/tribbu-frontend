@@ -65,7 +65,7 @@ function CreateEvent({ onEventCreated, tribbuId }) {
       <div className="flex flex-col">
         <label className="mb-1 text-sm font-medium text-slate-700">Título</label>
         <input
-          className="border border-slate-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="border border-slate-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           placeholder="Título"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
@@ -76,7 +76,7 @@ function CreateEvent({ onEventCreated, tribbuId }) {
       <div className="flex flex-col">
         <label className="mb-1 text-sm font-medium text-slate-700">Cachorro (opcional)</label>
         <select
-          className="border border-slate-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="border border-slate-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           value={childId}
           onChange={(e) => setChildId(e.target.value)}
           disabled={loadingChildren || !tribbuId}
@@ -94,7 +94,7 @@ function CreateEvent({ onEventCreated, tribbuId }) {
         <label className="mb-1 text-sm font-medium text-slate-700">Inicio</label>
         <input
           type="datetime-local"
-          className="border border-slate-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="border border-slate-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           value={start}
           onChange={(e) => setStart(e.target.value)}
           required
@@ -105,7 +105,7 @@ function CreateEvent({ onEventCreated, tribbuId }) {
         <label className="mb-1 text-sm font-medium text-slate-700">Fin</label>
         <input
           type="datetime-local"
-          className="border border-slate-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="border border-slate-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           value={end}
           onChange={(e) => setEnd(e.target.value)}
           required
@@ -114,7 +114,7 @@ function CreateEvent({ onEventCreated, tribbuId }) {
 
       <button
         type="submit"
-        className="bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2 px-4 rounded-md transition"
+        className="bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2 px-4 rounded-xl transition"
         disabled={!tribbuId}
       >
         Crear

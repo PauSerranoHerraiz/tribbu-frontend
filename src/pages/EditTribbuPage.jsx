@@ -101,7 +101,7 @@ function EditTribbusPage() {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm
+                className="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm
                          focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 required
               />
@@ -117,7 +117,7 @@ function EditTribbusPage() {
                   {members.map((member, index) => (
                     <div
                       key={member.userId._id}
-                      className="flex items-center justify-between p-2 border border-slate-200 rounded-md"
+                      className="flex items-center justify-between p-2 border border-slate-200 rounded-xl"
                     >
                       <span className="text-sm font-medium text-slate-700">
                         {member.userId.name}
@@ -128,7 +128,7 @@ function EditTribbusPage() {
                         onChange={(e) =>
                           handleMemberChange(index, "role", e.target.value)
                         }
-                        className="rounded-md border border-slate-300 px-2 py-1 text-sm
+                        className="rounded-xl border border-slate-300 px-2 py-1 text-sm
                                  focus:outline-none focus:ring-2 focus:ring-indigo-500"
                       >
                         <option value="GUARDIÁN">GUARDIÁN</option>
@@ -147,7 +147,7 @@ function EditTribbusPage() {
             <div className="flex gap-3">
               <button
                 type="submit"
-                className="flex-1 bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2 rounded-md transition"
+                className="flex-1 bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2 rounded-xl transition"
               >
                 Actualizar Tribbu
               </button>
@@ -155,7 +155,7 @@ function EditTribbusPage() {
               <button
                 type="button"
                 onClick={deleteTribbu}
-                className="flex-1 bg-red-500 hover:bg-red-600 text-white font-medium py-2 rounded-md transition"
+                className="flex-1 bg-red-500 hover:bg-red-600 text-white font-medium py-2 rounded-xl transition"
               >
                 Eliminar Tribbu
               </button>
