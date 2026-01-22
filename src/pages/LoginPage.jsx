@@ -4,30 +4,6 @@ import toast from "react-hot-toast";
 import { AuthContext } from "../context/auth.context";
 import authService from "../services/auth.service";
 
-function Spinner({ className = "w-5 h-5" }) {
-  return (
-    <svg
-      className={`${className} animate-spin`}
-      viewBox="0 0 24 24"
-      fill="none"
-    >
-      <circle
-        cx="12"
-        cy="12"
-        r="10"
-        stroke="currentColor"
-        strokeWidth="4"
-        className="opacity-25"
-      />
-      <path
-        fill="currentColor"
-        className="opacity-75"
-        d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-      />
-    </svg>
-  );
-}
-
 function LoginPage() {
   const { loginWithGoogle, storeToken, authenticateUser } =
     useContext(AuthContext);
@@ -80,19 +56,59 @@ function LoginPage() {
   return (
     <div className="min-h-screen bg-slate-50 flex justify-center items-center px-4">
       {loading && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-[9999]">
-          <div className="bg-white rounded-xl shadow-2xl px-8 py-6 flex flex-col items-center gap-4 animate-in fade-in zoom-in duration-200">
-            <Spinner className="w-10 h-10 text-indigo-500" />
-            <p className="text-sm font-medium text-slate-700">
-              Preparando tu Tribbu…
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 99999,
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: "white",
+              borderRadius: "16px",
+              padding: "32px",
+              boxShadow: "0 20px 25px rgba(0, 0, 0, 0.15)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "16px",
+              minWidth: "200px",
+            }}
+          >
+            <div
+              style={{
+                width: "48px",
+                height: "48px",
+                border: "4px solid #e0e7ff",
+                borderTop: "4px solid #6366f1",
+                borderRadius: "50%",
+                animation: "spin 1s linear infinite",
+              }}
+            ></div>
+            <p style={{ color: "#374151", fontWeight: "500", margin: 0 }}>
+              Entrando a Tribbu…
             </p>
           </div>
+
+          <style>{`
+            @keyframes spin {
+              to { transform: rotate(360deg); }
+            }
+          `}</style>
         </div>
       )}
 
       <div
         className={`bg-white border border-slate-200 rounded-xl shadow-sm p-6 w-full max-w-sm space-y-4 transition-all duration-300 ${
-          loading ? "opacity-50" : "opacity-100"
+          loading ? "opacity-50 pointer-events-none" : "opacity-100"
         }`}
       >
         <h1 className="text-2xl font-semibold text-slate-800">Login</h1>
@@ -135,16 +151,9 @@ function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2 rounded-xl transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2 rounded-xl transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? (
-              <>
-                <Spinner className="w-4 h-4 text-white" />
-                Entrando…
-              </>
-            ) : (
-              "Iniciar sesión"
-            )}
+            Iniciar sesión
           </button>
         </form>
 
