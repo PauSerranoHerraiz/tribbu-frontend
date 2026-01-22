@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 import authService from "../services/auth.service";
 import toast from "react-hot-toast";
+import LoadingPortal from "../components/LoadingPortal";
 
 function SignupPage() {
   const { loginWithGoogle } = useContext(AuthContext);
@@ -66,56 +67,7 @@ function SignupPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4">
-      {loading && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            zIndex: 99999,
-          }}
-        >
-          <div
-            style={{
-              backgroundColor: "white",
-              borderRadius: "16px",
-              padding: "32px",
-              boxShadow: "0 20px 25px rgba(0, 0, 0, 0.15)",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: "16px",
-              minWidth: "200px",
-            }}
-          >
-            <div
-              style={{
-                width: "48px",
-                height: "48px",
-                border: "4px solid #e0e7ff",
-                borderTop: "4px solid #6366f1",
-                borderRadius: "50%",
-                animation: "spin 1s linear infinite",
-              }}
-            ></div>
-            <p style={{ color: "#374151", fontWeight: "500", margin: 0 }}>
-              Creando tu Tribbu…
-            </p>
-          </div>
-
-          <style>{`
-            @keyframes spin {
-              to { transform: rotate(360deg); }
-            }
-          `}</style>
-        </div>
-      )}
+      <LoadingPortal isLoading={loading} />
 
       <div
         className={`w-full max-w-md bg-white rounded-xl shadow-md p-8 space-y-6 transition-all duration-300 ${
