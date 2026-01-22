@@ -193,7 +193,7 @@ function SignupPage() {
           <button
             type="submit"
             disabled={loading || password !== confirmPassword || password.length < 6}
-            className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2 rounded-xl transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="w-full bg-gradient-to-r from-indigo-500 to-violet-500 hover:bg-indigo-600 text-white font-medium py-2 rounded-xl transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             {loading ? (
               <>

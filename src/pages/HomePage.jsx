@@ -83,7 +83,7 @@ function HomePage() {
         <h1 className="text-xl font-semibold text-indigo-600">Bienvenido/a {user?.name}!</h1>
         <Link
           to="/events"
-          className="bg-indigo-600 text-white px-4 py-2 rounded-xl text-sm hover:bg-indigo-700 transition"
+          className="bg-violet-600 text-white px-4 py-2 rounded-xl text-sm hover:bg-indigo-700 transition"
         >
           Ver todos los eventos
         </Link>
@@ -118,7 +118,7 @@ function HomePage() {
           </section>
         )}
 
-        <section className="bg-gradient-to-br from-indigo-500 to-violet-500 rounded-2xl shadow-md p-8 text-white text-center">
+        <section className="bg-gradient-to-r from-indigo-500 to-violet-500 rounded-2xl shadow-md p-8 text-white text-center">
           <h2 className="text-xl font-semibold mb-2">Crear evento</h2>
           <p className="text-indigo-100 mb-4">
             Organiza actividades para tu Tribbu

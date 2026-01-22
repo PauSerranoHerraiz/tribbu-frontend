@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 function About() {
     return (
         <div className="min-h-screen bg-gray-50 text-gray-800 ">
-            <section className="bg-gradient-to-br from-[#615FFF] to-indigo-500 text-white rounded-2xl">
+            <section className="bg-gradient-to-r from-indigo-500 to-violet-500 text-white rounded-2xl">
                 <div className="max-w-5xl mx-auto px-6 py-10 text-center">
                     <img className="max-h-18 mx-auto mb-4" src={logo} alt="" />
                     <h1 className="text-4xl md:text-5xl font-bold mb-6">
