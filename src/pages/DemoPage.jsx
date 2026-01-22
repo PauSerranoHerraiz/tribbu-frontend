@@ -45,13 +45,13 @@ function DemoPage() {
       <main className="px-6 grid gap-6 max-w-4xl mx-auto mb-12">
 
         <section className="bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition">
-          <h2 className="font-semibold mb-3 text-lg">📅 Próximo evento</h2>
+          <h2 className="font-semibold mb-3 text-lg">Próximo evento</h2>
           <p className="text-lg font-medium text-gray-800">{demoTribbu.events[0].title}</p>
           <p className="text-sm text-slate-500 mt-1">{demoTribbu.events[0].date}</p>
         </section>
 
         <section className="bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition">
-          <h2 className="font-semibold mb-4 text-lg">👥 Miembros</h2>
+          <h2 className="font-semibold mb-4 text-lg">Miembros</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {demoTribbu.members.map((member) => (
               <div
@@ -66,7 +66,7 @@ function DemoPage() {
         </section>
 
         <section className="bg-white rounded-2xl shadow-md p-6 hover:shadow-lg transition">
-          <h2 className="font-semibold mb-3 text-lg">📝 Notas de la Tribbu</h2>
+          <h2 className="font-semibold mb-3 text-lg">Notas de la Tribbu</h2>
           <p className="text-gray-700 leading-relaxed">{demoTribbu.note}</p>
         </section>
 
