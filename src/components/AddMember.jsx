@@ -1,5 +1,6 @@
 import { useState } from "react";
 import tribbusService from "../services/tribbu.service";
+import toast from "react-hot-toast";
 
 function AddMember({ tribbuId, onMemberAdded }) {
   const [email, setEmail] = useState("");
@@ -17,6 +18,7 @@ function AddMember({ tribbuId, onMemberAdded }) {
     tribbusService
       .inviteMemberToTribbu(tribbuId, { email, role })
       .then(() => {
+        toast.success(`Has ivitado a ${email} a tu Tribbu!`);
         setSuccess(`Invitación enviada a ${email}`);
         setEmail("");
         setRole("SABIO");
@@ -28,8 +30,9 @@ function AddMember({ tribbuId, onMemberAdded }) {
       .catch((err) => {
         const message = 
           err.response?.data?.message || 
-          "No se pudo enviar la invitación";
+          "No se pudo enviar la invitación a tu Tribbu...";
         setError(message);
+        toast.error(message)
       })
       .finally(() => setLoading(false));
   };

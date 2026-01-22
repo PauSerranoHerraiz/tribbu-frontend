@@ -5,6 +5,7 @@ import { AuthContext } from "../context/auth.context";
 import AddChild from "../components/AddChild";
 import AddMember from "../components/AddMember";
 import EventsSection from "../components/events/EventsSection";
+import toast from "react-hot-toast";
 
 function TribbuDetailsPage() {
   const { tribbuId } = useParams();
@@ -51,9 +52,85 @@ function TribbuDetailsPage() {
     setShowAddChild(false);
   };
 
+  const handleDeleteChild = async (childId) => {
+    toast((t) => (
+      <div className="flex gap-3">
+        <div>
+          <p className="font-medium mb-2">¿Eliminar este cachorro?</p>
+          <p className="text-xs text-slate-500">Esta acción no se puede deshacer.</p>
+        </div>
+        <div className="flex gap-2 ml-auto">
+          <button
+            onClick={() => toast.dismiss(t.id)}
+            className="btn btn-sm btn-ghost"
+          >
+            Cancelar
+          </button>
+          <button
+            onClick={() => {
+              toast.dismiss(t.id);
+              axios.delete(
+                `${import.meta.env.VITE_API_URL}/api/children/${childId}`,
+                { headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` } }
+              )
+                .then(() => {
+                  toast.success("Cachorro eliminado");
+                  fetchTribbu();
+                })
+                .catch(() => {
+                  toast.error("No se pudo eliminar el cachorro");
+                });
+            }}
+            className="btn btn-sm btn-error"
+          >
+            Eliminar
+          </button>
+        </div>
+      </div>
+    ), { duration: Infinity });
+  };
+
   const handleMemberAdded = async () => {
     await fetchTribbu();
     setShowAddMember(false);
+  };
+
+  const handleDeleteMember = async (memberId) => {
+    toast((t) => (
+      <div className="flex gap-3">
+        <div>
+          <p className="font-medium mb-2">¿Eliminar este miembro?</p>
+          <p className="text-xs text-slate-500">Esta acción no se puede deshacer.</p>
+        </div>
+        <div className="flex gap-2 ml-auto">
+          <button
+            onClick={() => toast.dismiss(t.id)}
+            className="btn btn-sm btn-ghost"
+          >
+            Cancelar
+          </button>
+          <button
+            onClick={() => {
+              toast.dismiss(t.id);
+              axios.delete(
+                `${import.meta.env.VITE_API_URL}/api/tribbus/${tribbuId}/members/${memberId}`,
+                { headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` } }
+              )
+                .then(() => {
+                  toast.success("Miembro eliminado");
+                  fetchTribbu();
+                })
+                .catch(() => {
+                  toast.error("No se pudo eliminar el miembro");
+                });
+            }}
+            className="btn btn-sm btn-error"
+          >
+            Eliminar
+          </button>
+        </div>
+      </div>
+    ), { duration: Infinity });
   };
 
   if (authLoading || loading)
@@ -192,6 +269,14 @@ function TribbuDetailsPage() {
                 <span className="mt-2 text-xs font-semibold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-full">
                   {member.role}
                 </span>
+                {isGuardian && (
+                  <button
+                    onClick={() => handleDeleteMember(member.userId._id)}
+                    className="mt-3 text-xs bg-red-100 text-red-600 hover:bg-red-200 px-2 py-1 rounded transition"
+                  >
+                    Eliminar
+                  </button>
+                )}
               </li>
             ))}
           </ul>
@@ -241,6 +326,14 @@ function TribbuDetailsPage() {
                 <p className="text-sm text-slate-600">
                   Notas: {child.notes || "Sin notas"}
                 </p>
+                {isGuardian && (
+                  <button
+                    onClick={() => handleDeleteChild(child._id)}
+                    className="mt-3 text-xs bg-red-100 text-red-600 hover:bg-red-200 px-2 py-1 rounded transition"
+                  >
+                    Eliminar
+                  </button>
+                )}
               </li>
             ))}
           </ul>

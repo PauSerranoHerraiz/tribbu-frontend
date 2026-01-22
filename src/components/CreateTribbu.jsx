@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import tribbusService from "../services/tribbu.service";
+import toast from "react-hot-toast";
 
 function CreateTribbu({ refreshTribbus }) {
   const [name, setName] = useState("");
@@ -12,11 +13,17 @@ function CreateTribbu({ refreshTribbus }) {
     tribbusService
       .createTribbu({ name })
       .then(() => {
+        toast.success("Felicidades, has creado tu Tribbu!")
         setName("");
         refreshTribbus?.();
         navigate("/tribbus");
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        const msg =
+          error?.response?.data?.message || "Algo ha ocurrido y no se ha credo tu Tribbu... Vuelve a intentarlo!!";
+        toast.error(msg); // <-- error
+      });
   };
 
   return (

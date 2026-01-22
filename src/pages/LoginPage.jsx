@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 import { AuthContext } from "../context/auth.context";
 import authService from "../services/auth.service";
 
@@ -18,22 +19,26 @@ function LoginPage() {
       const response = await authService.login({ email, password });
       storeToken(response.data.authToken);
       await authenticateUser();
+      toast.success("Bienvenido de nuevo a Tribbu!");
       navigate("/");
     } catch (error) {
       const message = error.response?.data?.message || "Error al iniciar sesión";
       setErrorMessage(message);
+      toast.error(message);
     }
   };
 
   const handleGoogleLogin = async () => {
     try {
       await loginWithGoogle();
+      toast.success("Bienvenido de nuevo a Tribbu!");
       navigate("/");
     } catch (error) {
-      setErrorMessage("Error al iniciar sesión con Google");
+      const message = "Error al iniciar sesión con Google";
+      setErrorMessage(message);
+      toast.error(message);
     }
   };
-
   return (
     <div className="min-h-screen bg-slate-50 flex justify-center items-center px-4">
       <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-6 w-full max-w-sm space-y-4">

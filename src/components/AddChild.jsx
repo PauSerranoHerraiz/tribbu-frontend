@@ -1,5 +1,6 @@
 import { useState } from "react";
 import childService from "../services/child.service";
+import toast from "react-hot-toast";
 
 function AddChild({ tribbuId, onChildAdded }) {
   const [name, setName] = useState("");
@@ -8,7 +9,7 @@ function AddChild({ tribbuId, onChildAdded }) {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
     setLoading(true);
@@ -25,9 +26,12 @@ function AddChild({ tribbuId, onChildAdded }) {
       setBirthDate("");
       setNotes("");
 
+      toast.success("Has añadido un cachorro a tu Tribbu!");
       onChildAdded?.(response.data);
     } catch (err) {
-      setError(err.response?.data?.error || "No se pudo crear el cachorro");
+      const msg = err.response?.data?.error || "No se pudo crear el cachorro";
+      setError(msg);
+      toast.error(msg);
     } finally {
       setLoading(false);
     }

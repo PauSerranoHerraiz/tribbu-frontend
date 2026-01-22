@@ -10,6 +10,7 @@ import NavBar from "./components/NavBar";
 import TribbuListPage from "./pages/TribbuListPage";
 import EditTribbusPage from "./pages/EditTribbuPage";
 import Layout from "./components/Layout";
+import { Toaster } from "react-hot-toast";
 import Card from "./components/ui/Card";
 import Button from "./components/ui/Button";
 import RoleBadge from "./components/ui/RoleBadge";
@@ -29,6 +30,8 @@ function App() {
 
   return (
     <Layout>
+      <>
+       <Toaster position="top-center" />
       <div className="min-h-screen bg-slate-50 p-8 space-y-6">
 
 
@@ -48,6 +51,7 @@ function App() {
         </Routes>
 
       </div>
+      </>
     </Layout>
   );
 }

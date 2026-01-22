@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 function InvitationPage() {
   const { invitationId } = useParams();
@@ -11,7 +12,6 @@ function InvitationPage() {
   const [error, setError] = useState(null);
   const [invitation, setInvitation] = useState(null);
 
-  // Leer token una sola vez
   const token = localStorage.getItem("authToken");
 
   useEffect(() => {
@@ -34,7 +34,7 @@ function InvitationPage() {
     fetchInvitation();
   }, [invitationId, token]);
 
-  const handleAction = async (type) => {
+    const handleAction = async (type) => {
     if (!token) {
       navigate(`/login?redirect=/invitations/${invitationId}`);
       return;
@@ -49,12 +49,21 @@ function InvitationPage() {
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
+      
+      const message = type === "accept" 
+        ? "Felicidades, te has unido a la Tribbu!" 
+        : "Invitación rechazada";
+      toast.success(message);
+      
       navigate("/");
     } catch (err) {
-      setError(err.response?.data?.message || `Error al ${type} la invitación`);
+      const errorMsg = err.response?.data?.message || `Error al ${type} la invitación`;
+      setError(errorMsg);
+      toast.error(errorMsg);
       setActionLoading(false);
     }
   };
+
 
   if (loadingInvitation)
     return (
