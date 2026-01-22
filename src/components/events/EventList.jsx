@@ -1,20 +1,47 @@
-import { useState } from 'react';
-import { Calendar, momentLocalizer } from 'react-big-calendar';
-import moment from 'moment';
-import 'react-big-calendar/lib/css/react-big-calendar.css';
-import 'moment/locale/es';
-import EventModal from './EventModal';
+import { useState, useMemo } from "react";
+import { Calendar, momentLocalizer } from "react-big-calendar";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import moment from "moment";
+import "react-big-calendar/lib/css/react-big-calendar.css";
+import "moment/locale/es";
+import EventModal from "./EventModal";
 
-moment.locale('es');
-moment.updateLocale('es', { week: { dow: 1, doy: 4 } });
+moment.locale("es");
+moment.updateLocale("es", { week: { dow: 1, doy: 4 } });
 const localizer = momentLocalizer(moment);
+
+const formatEventTitle = (event) => {
+  let title = event.completed ? "✓ " : "";
+  title += event.title;
+  if (event.childId?.name) title += ` - 🐶 ${event.childId.name}`;
+  if (event.tribbuName) title += ` (${event.tribbuName})`;
+  if (event.responsibles?.length) {
+    title += ` [${event.responsibles.map((r) => r.name || r).join(", ")}]`;
+  }
+  return title;
+};
+
+const getEventStyle = (event) => ({
+  style: {
+    backgroundColor: event.resource.completed ? "#10b981" : "#6366f1",
+    borderRadius: "6px",
+    opacity: event.resource.completed ? 0.7 : 1,
+    color: "white",
+    border: "none",
+    display: "block",
+    padding: "2px 4px",
+    fontSize: "0.85rem",
+    textDecoration: event.resource.completed ? "line-through" : "none",
+  },
+});
 
 function EventList({ events, onEventUpdated, onEventDeleted, canEdit = false, tribbuId = null }) {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [date, setDate] = useState(new Date());
-  const [view, setView] = useState('month');
+  const [view, setView] = useState("month");
 
   const handleSelectEvent = (event) => {
     setSelectedEvent(event.resource);
@@ -24,10 +51,7 @@ function EventList({ events, onEventUpdated, onEventDeleted, canEdit = false, tr
 
   const handleSelectSlot = (slotInfo) => {
     if (!canEdit || !tribbuId) return;
-    setSelectedSlot({
-      start: slotInfo.start,
-      end: slotInfo.end,
-    });
+    setSelectedSlot({ start: slotInfo.start, end: slotInfo.end });
     setSelectedEvent(null);
     setIsModalOpen(true);
   };
@@ -38,53 +62,48 @@ function EventList({ events, onEventUpdated, onEventDeleted, canEdit = false, tr
     setSelectedSlot(null);
   };
 
-  const eventStyleGetter = (event) => {
-    const style = {
-      backgroundColor: event.resource.completed ? '#10b981' : '#6366f1',
-      borderRadius: '5px',
-      opacity: event.resource.completed ? 0.7 : 1,
-      color: 'white',
-      border: '0px',
-      display: 'block',
-      textDecoration: event.resource.completed ? 'line-through' : 'none',
-    };
-    return { style };
+  const handleEventDrop = ({ event, start, end }) => {
+    if (!canEdit) return;
+    const updatedEvent = { ...event.resource, start, end };
+    onEventUpdated(updatedEvent);
   };
 
-  const hasEvents = Array.isArray(events) && events.length > 0;
+  const handleEventResize = ({ event, start, end }) => {
+    if (!canEdit) return;
+    const updatedEvent = { ...event.resource, start, end };
+    onEventUpdated(updatedEvent);
+  };
 
-  const calendarEvents = (events || []).map((event) => {
-    let title = event.completed ? '✓ ' : '';
-    title += event.title;
+  const calendarEvents = useMemo(
+    () =>
+      (events || []).map((event) => ({
+        id: event._id,
+        title: formatEventTitle(event),
+        start: new Date(event.start),
+        end: new Date(event.end),
+        resource: event,
+        // Tooltip simple usando title nativo
+        titleAttribute: `Responsables: ${event.responsibles?.map((r) => r.name || r).join(", ") || "Ninguno"}`,
+      })),
+    [events]
+  );
 
-    if (event.childId?.name) {
-      title += ` - 🐶 ${event.childId.name}`;
-    }
-
-    if (event.tribbuName) {
-      title += ` (${event.tribbuName})`;
-    }
-
-    if (event.responsibles && event.responsibles.length > 0) {
-      const respNames = event.responsibles.map((r) => r.name || r).join(', ');
-      title += ` [${respNames}]`;
-    }
-
-    return {
-      id: event._id,
-      title,
-      start: new Date(event.start),
-      end: new Date(event.end),
-      resource: event,
-    };
-  });
+  const hasEvents = calendarEvents.length > 0;
 
   return (
-    <>
+    <DndProvider backend={HTML5Backend}>
       <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-2 sm:p-4">
         {!hasEvents && (
           <div className="mb-4 text-center text-slate-500 italic py-4">
-            <p className="text-sm sm:text-base">No hay eventos programados</p>
+            <p className="text-sm sm:text-base">
+              {view === "month"
+                ? "No hay eventos este mes"
+                : view === "week"
+                ? "No hay eventos esta semana"
+                : view === "day"
+                ? "No hay eventos hoy"
+                : "No hay eventos programados"}
+            </p>
             {canEdit && tribbuId && (
               <p className="text-slate-400 text-xs sm:text-sm mt-1">
                 Haz click en el calendario para crear un evento
@@ -110,15 +129,20 @@ function EventList({ events, onEventUpdated, onEventDeleted, canEdit = false, tr
             events={calendarEvents}
             startAccessor="start"
             endAccessor="end"
-            style={{ height: '100%', minHeight: 500 }}
+            style={{ height: "100%", minHeight: 500 }}
             onSelectEvent={handleSelectEvent}
             onSelectSlot={handleSelectSlot}
             selectable={canEdit && tribbuId}
-            eventPropGetter={eventStyleGetter}
+            eventPropGetter={getEventStyle}
             date={date}
-            onNavigate={(newDate) => setDate(newDate)}
+            onNavigate={setDate}
             view={view}
-            onView={(newView) => setView(newView)}
+            onView={setView}
+            onEventDrop={handleEventDrop}
+            onEventResize={handleEventResize}
+            draggableAccessor={() => canEdit}
+            resizable
+            tooltipAccessor={(event) => event.titleAttribute} // tooltip nativo
             messages={{
               next: "Sig.",
               previous: "Ant.",
@@ -131,9 +155,9 @@ function EventList({ events, onEventUpdated, onEventDeleted, canEdit = false, tr
               time: "Hora",
               event: "Evento",
               noEventsInRange: "No hay eventos",
-              showMore: (total) => `+${total}`
+              showMore: (total) => `+${total}`,
             }}
-            views={['month', 'week', 'day', 'agenda']}
+            views={["month", "week", "day", "agenda"]}
             defaultView="month"
             popup
           />
@@ -151,7 +175,7 @@ function EventList({ events, onEventUpdated, onEventDeleted, canEdit = false, tr
           onEventDeleted={onEventDeleted}
         />
       )}
-    </>
+    </DndProvider>
   );
 }
 
