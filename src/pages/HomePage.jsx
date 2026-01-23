@@ -73,7 +73,7 @@ function HomePage() {
   if (loadingTribbus)
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <p className="text-slate-600 text-lg">Cargando tribbus...</p>
+        <p className="text-slate-600 text-lg">Cargando Tribbus...</p>
       </div>
     );
 
@@ -91,7 +91,7 @@ function HomePage() {
 
       <main className="px-6 grid gap-6 max-w-4xl mx-auto pb-8">
         {!loadingEvents && nextEvent && (
-          <section className="bg-white rounded-2xl shadow-sm p-6 border-l-4 border-indigo-600">
+          <section className="bg-white rounded-2xl shadow-xl p-6 border-l-4 border-indigo-500">
             <h2 className="text-sm font-semibold text-slate-500 uppercase mb-2">
               Próximo evento
             </h2>

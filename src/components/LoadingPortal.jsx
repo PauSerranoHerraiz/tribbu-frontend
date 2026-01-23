@@ -39,7 +39,7 @@ export default function LoadingPortal({ isLoading }) {
           }}
         />
         <p style={{ fontSize: "16px", color: "#333", margin: 0 }}>
-          Cargando…
+          Cargando tu Tribbu...
         </p>
         <style>{`
           @keyframes spin {
