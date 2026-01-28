@@ -1,5 +1,5 @@
-import { useContext } from "react";
-import { Routes, Route } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
@@ -19,9 +19,15 @@ import EventsPage from "./components/events/EventsPage";
 import DemoPage from "./pages/DemoPage";
 import InvitationPage from "./pages/InvitationPage";
 import About from "./pages/About";
-
+import { logPageView } from "./utils/analytics";
 
 function App() {
+  const location = useLocation();
+
+  useEffect(() => {
+    logPageView();
+  }, [location]);
+
   const { user, isLoading, isLoggedIn } = useContext(AuthContext);
 
   const tribbuName = user?.tribbuName || user?.tribbu?.name || "Tribbu";
