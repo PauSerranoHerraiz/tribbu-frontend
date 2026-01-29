@@ -1,24 +1,21 @@
-import { useContext, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
+import { useEffect } from "react";
+
 import HomePage from "./pages/HomePage";
-import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
-import TribbuGatePage from "./pages/TribbuGatePage";
-import TribbuDetailsPage from "./pages/TribbuDetailsPage";
-import CreateTribbu from "./components/CreateTribbu";
-import NavBar from "./components/NavBar";
+import LoginPage from "./pages/LoginPage";
 import TribbuListPage from "./pages/TribbuListPage";
-import EditTribbusPage from "./pages/EditTribbuPage";
-import Layout from "./components/Layout";
-import { Toaster } from "react-hot-toast";
-import Card from "./components/ui/Card";
-import Button from "./components/ui/Button";
-import RoleBadge from "./components/ui/RoleBadge";
-import { AuthContext } from "./context/auth.context";
-import EventsPage from "./components/events/EventsPage";
+import TribbuDetailsPage from "./pages/TribbuDetailsPage";
+import EditTribbuPage from "./pages/EditTribbuPage";
 import DemoPage from "./pages/DemoPage";
+import TribbuGatePage from "./pages/TribbuGatePage";
 import InvitationPage from "./pages/InvitationPage";
 import About from "./pages/About";
+import NotificationsPage from "./pages/NotificationsPage";
+
+import Layout from "./components/Layout";
+import IsPrivate from "./components/IsPrivate";
+import IsAnon from "./components/IsAnon";
 import { logPageView } from "./utils/analytics";
 
 function App() {
@@ -28,37 +25,115 @@ function App() {
     logPageView();
   }, [location]);
 
-  const { user, isLoading, isLoggedIn } = useContext(AuthContext);
-
-  const tribbuName = user?.tribbuName || user?.tribbu?.name || "Tribbu";
-  const username = user?.username || user?.name || "Usuario";
-  const role = user?.role || "cachorro";
-
   return (
-    <Layout>
-      <>
-       <Toaster position="top-center" />
-      <div className="min-h-screen bg-slate-50 p-8 space-y-6">
-
-
-        <Routes>
-          <Route path="/demo" element={<DemoPage />} />
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/tribbu-gate" element={<TribbuGatePage />} />
-          <Route path="/create-tribbu" element={<CreateTribbu />} />
-          <Route path="/tribbus" element={<TribbuListPage />} />
-          <Route path="/tribbus/edit/:tribbuId" element={<EditTribbusPage />} />
-          <Route path="/tribbus/:tribbuId" element={<TribbuDetailsPage />} />
-          <Route path="/events" element={<EventsPage />} />
-          <Route path="/invitations/:invitationId" element={<InvitationPage />} />
-          <Route path="/about" element={<About />} />
-        </Routes>
-
-      </div>
-      </>
-    </Layout>
+    <div className="App">
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Layout>
+              <HomePage />
+            </Layout>
+          }
+        />
+        <Route
+          path="/tribbus"
+          element={
+            <IsPrivate>
+              <Layout>
+                <TribbuListPage />
+              </Layout>
+            </IsPrivate>
+          }
+        />
+        <Route
+          path="/tribbus/:tribbuId"
+          element={
+            <IsPrivate>
+              <Layout>
+                <TribbuDetailsPage />
+              </Layout>
+            </IsPrivate>
+          }
+        />
+        <Route
+          path="/tribbus/:tribbuId/edit"
+          element={
+            <IsPrivate>
+              <Layout>
+                <EditTribbuPage />
+              </Layout>
+            </IsPrivate>
+          }
+        />
+        <Route
+          path="/tribbus/gate/:tribbuId"
+          element={
+            <IsPrivate>
+              <Layout>
+                <TribbuGatePage />
+              </Layout>
+            </IsPrivate>
+          }
+        />
+        <Route
+          path="/invitations/:invitationId"
+          element={
+            <IsPrivate>
+              <Layout>
+                <InvitationPage />
+              </Layout>
+            </IsPrivate>
+          }
+        />
+        <Route
+          path="/notifications"
+          element={
+            <IsPrivate>
+              <Layout>
+                <NotificationsPage />
+              </Layout>
+            </IsPrivate>
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <IsAnon>
+              <Layout>
+                <SignupPage />
+              </Layout>
+            </IsAnon>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <IsAnon>
+              <Layout>
+                <LoginPage />
+              </Layout>
+            </IsAnon>
+          }
+        />
+        <Route
+          path="/demo"
+          element={
+            <Layout>
+              <DemoPage />
+            </Layout>
+          }
+        />
+        <Route
+          path="/about"
+          element={
+            <Layout>
+              <About />
+            </Layout>
+          }
+        />
+      </Routes>
+    </div>
   );
 }
 

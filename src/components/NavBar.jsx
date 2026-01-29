@@ -1,7 +1,8 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/auth.context";
-import logo from "/images/tribbu-logo.png"
+import logo from "/images/tribbu-logo.png";
+import NotificationBell from "./NotificationBell";
 
 function Navbar() {
   const { isLoggedIn, isLoading, user, logOutUser } = useContext(AuthContext);
@@ -70,6 +71,8 @@ function Navbar() {
               </>
             ) : (
               <>
+                {isLoggedIn && <NotificationBell />}
+
                 <div className="flex items-center gap-2">
                   <div className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-300 to-violet-300 flex items-center justify-center text-indigo-900 font-semibold shadow-sm">
                     {user?.name?.[0]}
@@ -111,7 +114,7 @@ function Navbar() {
                   </div>
                   <span className="font-medium">{user?.name}</span>
                 </div>
-                
+
                 {[
                   { to: "/tribbus", label: "Mi Tribbu" },
                   { to: "/create-tribbu", label: "Nueva Tribbu" },
@@ -126,7 +129,7 @@ function Navbar() {
                     {label}
                   </Link>
                 ))}
-                
+
                 <button
                   onClick={handleLogout}
                   className="w-full text-left px-4 py-3 rounded-xl hover:bg-white/10 transition border-t border-white/20 mt-2"
