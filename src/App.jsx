@@ -13,6 +13,9 @@ import InvitationPage from "./pages/InvitationPage";
 import About from "./pages/About";
 import NotificationsPage from "./pages/NotificationsPage";
 
+import EventsPage from "./components/events/EventsPage";
+import CreateTribbu from "./components/CreateTribbu"; // <-- AÑADIR ESTA LÍNEA
+
 import Layout from "./components/Layout";
 import IsPrivate from "./components/IsPrivate";
 import IsAnon from "./components/IsAnon";
@@ -42,6 +45,26 @@ function App() {
             <IsPrivate>
               <Layout>
                 <TribbuListPage />
+              </Layout>
+            </IsPrivate>
+          }
+        />
+        <Route
+          path="/create-tribbu"
+          element={
+            <IsPrivate>
+              <Layout>
+                <CreateTribbu />
+              </Layout>
+            </IsPrivate>
+          }
+        />
+        <Route
+          path="/events"
+          element={
+            <IsPrivate>
+              <Layout>
+                <EventsPage />
               </Layout>
             </IsPrivate>
           }
